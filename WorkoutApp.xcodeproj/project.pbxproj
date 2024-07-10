@@ -154,13 +154,13 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		A6551C572C34BBA800D413BF /* SahredFiles */ = {
+		A6551C572C34BBA800D413BF /* SharedFiles */ = {
 			isa = PBXGroup;
 			children = (
 				A6EED3AC2C2CA53100A4615C /* WorkoutInfoModel.swift */,
 				A6B3ADB02C33AC9700AD7D99 /* ActiveWorkoutVariable.swift */,
 			);
-			path = SahredFiles;
+			path = SharedFiles;
 			sourceTree = "<group>";
 		};
 		A6B3ADA62C336CC900AD7D99 /* Frameworks */ = {
@@ -174,7 +174,7 @@
 		A6EED3272C2BAD1000A4615C = {
 			isa = PBXGroup;
 			children = (
-				A6551C572C34BBA800D413BF /* SahredFiles */,
+				A6551C572C34BBA800D413BF /* SharedFiles */,
 				A6EED3322C2BAD1000A4615C /* WorkoutApp */,
 				A6EED34C2C2BADB900A4615C /* WatchWourkoutApp Watch App */,
 				A6EED3A02C2BF78700A4615C /* WorkoutApp.app */,
