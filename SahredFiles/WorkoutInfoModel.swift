@@ -5,23 +5,29 @@
 //  Created by Sélim Gawad on 6/26/24.
 //
 
+// 
+
 import Foundation
 
 struct WorkoutInformation: Codable {
-    let date: Date
-    let username: String
-    let movement: String
-    let rounds: Int
-    let reps: Int
-    let weight: Double
+    var date: Date
+    var username: String
+    var movement: String
+    var rounds: Int
+    var reps: Int
+    var weight: Double?
+    var notes: String?
+    var isDataGood: Bool
     
-    init(date: Date, username: String, movement: String, rounds: Int, reps: Int, weight: Double) {
+    init(date: Date, username: String, movement: String, rounds: Int, reps: Int, weight: Double?, notes : String?, isDataGood : Bool) {
         self.date = date
         self.username = username
         self.movement = movement
         self.rounds = rounds
         self.reps = reps
         self.weight = weight
+        self.notes = notes
+        self.isDataGood = isDataGood
     }
 }
 

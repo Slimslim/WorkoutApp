@@ -51,7 +51,11 @@ class SharedWorkoutInfo: ObservableObject, Codable {
             print("Movement: \(info.movement)")
             print("Rounds: \(info.rounds)")
             print("Reps: \(info.reps)")
-            print("Weight: \(info.weight)")
+            if let weight = info.weight {
+                print("Weight: \(weight)")
+            } else {
+                print("Weight: N/A")
+            }
         } else {
             print("No workout info available.")
         }
@@ -62,5 +66,34 @@ class SharedWorkoutInfo: ObservableObject, Codable {
         } else {
             print("No motion data available.")
         }
+    }
+}
+
+extension SharedWorkoutInfo {
+    static var mock: SharedWorkoutInfo {
+        let sharedWorkoutInfo = SharedWorkoutInfo()
+        sharedWorkoutInfo.workoutId = UUID()
+        sharedWorkoutInfo.workoutInfo = WorkoutInformation(
+            date: Date(),
+            username: "Selim",
+            movement: "Front Squat",
+            rounds: 3,
+            reps: 10,
+            weight: 135.0,
+            notes: "Workout was smooth, no issues. Tried to have a 2 min rest between rounds",
+            isDataGood: true
+        )
+        
+        let mockAccelerometerData: [AccelerometerSnapshot] = [
+            AccelerometerSnapshot(timestamp: Date().timeIntervalSince1970, accelerationX: 0.1, accelerationY: 0.2, accelerationZ: 0.3), AccelerometerSnapshot(timestamp: Date().addingTimeInterval(1).timeIntervalSince1970, accelerationX: 0.2, accelerationY: 0.3, accelerationZ: 0.4),
+            AccelerometerSnapshot(timestamp: Date().addingTimeInterval(2).timeIntervalSince1970, accelerationX: 0.3, accelerationY: 0.4, accelerationZ: 0.5),
+            // Add more mock data as needed
+        ]
+        
+        sharedWorkoutInfo.workoutData = WorkoutMotionData(
+            accelerometerSnapshots: mockAccelerometerData,
+            gyroscopeSnapshots: []
+        )
+        return sharedWorkoutInfo
     }
 }

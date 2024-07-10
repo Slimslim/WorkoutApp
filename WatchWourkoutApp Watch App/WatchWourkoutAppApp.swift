@@ -6,12 +6,26 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
-struct WatchWourkoutApp_Watch_AppApp: App {
+struct WorkoutAiAppWatchApp: App {
+    
+    @StateObject var phoneConnector = PhoneConnector()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear {
+//                    PhoneConnector()
+//                    WatchConnectivityManager.shared.initialize()
+                }
         }
+//        .modelContainer(for: WorkoutDataChunk.self)
+    }
+    
+    init(){
+        print(URL.applicationSupportDirectory.path(percentEncoded: false))
     }
 }
+

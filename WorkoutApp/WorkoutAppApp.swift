@@ -6,12 +6,26 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct WorkoutAppApp: App {
+    // Inject AppDelegate
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @StateObject var watchConnector = WatchConnector()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainTabView()
+                .onAppear {
+//                    WatchConnector()
+                }
         }
+    }
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        return true
     }
 }
