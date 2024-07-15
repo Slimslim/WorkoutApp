@@ -13,12 +13,18 @@
 		A6551C5E2C3609E900D413BF /* WorkoutConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C5D2C3609E900D413BF /* WorkoutConfirmationView.swift */; };
 		A6551C602C36153100D413BF /* WorkoutFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C5F2C36153100D413BF /* WorkoutFormViewModel.swift */; };
 		A6551C622C3F113300D413BF /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C612C3F113300D413BF /* AppData.swift */; };
+		A6551C722C41B4EE00D413BF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A6551C712C41B4EE00D413BF /* RealmSwift */; };
+		A6551C742C41B8F700D413BF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C732C41B8F700D413BF /* LoginView.swift */; };
+		A6551C762C41C64400D413BF /* WorkoutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C752C41C64400D413BF /* WorkoutsView.swift */; };
+		A6551C782C43CCB100D413BF /* ProductsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C772C43CCB100D413BF /* ProductsView.swift */; };
+		A6551C7A2C43CD5B00D413BF /* TicketModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C792C43CD5B00D413BF /* TicketModel.swift */; };
+		A6551C7C2C43CEE600D413BF /* TicketsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C7B2C43CEE600D413BF /* TicketsView.swift */; };
+		A6551C802C4576FE00D413BF /* MongoDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C7F2C4576FE00D413BF /* MongoDBManager.swift */; };
 		A6B3ADA32C3366B600AD7D99 /* WatchConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B3ADA22C3366B600AD7D99 /* WatchConnector.swift */; };
 		A6B3ADA52C3367FD00AD7D99 /* PhoneConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B3ADA42C3367FD00AD7D99 /* PhoneConnector.swift */; };
 		A6B3ADA72C336CC900AD7D99 /* WatchWourkoutApp Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A6EED3A12C2BF78700A4615C /* WatchWourkoutApp Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A6B3ADAB2C336CDD00AD7D99 /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B3ADAA2C336CDD00AD7D99 /* WatchConnectivity.framework */; };
 		A6B3ADAE2C3391CA00AD7D99 /* WorkoutInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EED3AC2C2CA53100A4615C /* WorkoutInfoModel.swift */; };
-		A6B3ADAF2C3392A000AD7D99 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EED39C2C2BE31D00A4615C /* DataModel.swift */; };
 		A6B3ADB12C33AC9700AD7D99 /* ActiveWorkoutVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B3ADB02C33AC9700AD7D99 /* ActiveWorkoutVariable.swift */; };
 		A6EED3342C2BAD1000A4615C /* WorkoutAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EED3332C2BAD1000A4615C /* WorkoutAppApp.swift */; };
 		A6EED3362C2BAD1000A4615C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EED3352C2BAD1000A4615C /* ContentView.swift */; };
@@ -89,6 +95,12 @@
 		A6551C5D2C3609E900D413BF /* WorkoutConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutConfirmationView.swift; sourceTree = "<group>"; };
 		A6551C5F2C36153100D413BF /* WorkoutFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutFormViewModel.swift; sourceTree = "<group>"; };
 		A6551C612C3F113300D413BF /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
+		A6551C732C41B8F700D413BF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		A6551C752C41C64400D413BF /* WorkoutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutsView.swift; sourceTree = "<group>"; };
+		A6551C772C43CCB100D413BF /* ProductsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsView.swift; sourceTree = "<group>"; };
+		A6551C792C43CD5B00D413BF /* TicketModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketModel.swift; sourceTree = "<group>"; };
+		A6551C7B2C43CEE600D413BF /* TicketsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsView.swift; sourceTree = "<group>"; };
+		A6551C7F2C4576FE00D413BF /* MongoDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MongoDBManager.swift; sourceTree = "<group>"; };
 		A6B3ADA12C33543800AD7D99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A6B3ADA22C3366B600AD7D99 /* WatchConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnector.swift; sourceTree = "<group>"; };
 		A6B3ADA42C3367FD00AD7D99 /* PhoneConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneConnector.swift; sourceTree = "<group>"; };
@@ -122,6 +134,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6551C722C41B4EE00D413BF /* RealmSwift in Frameworks */,
 				A6B3ADAB2C336CDD00AD7D99 /* WatchConnectivity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,6 +155,7 @@
 				A6B3ADA22C3366B600AD7D99 /* WatchConnector.swift */,
 				A6551C592C35DEB100D413BF /* WorkoutConfirmationViewController.swift */,
 				A6551C5B2C35DFD900D413BF /* MainViewController.swift */,
+				A6551C7F2C4576FE00D413BF /* MongoDBManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -161,6 +175,42 @@
 				A6B3ADB02C33AC9700AD7D99 /* ActiveWorkoutVariable.swift */,
 			);
 			path = SharedFiles;
+			sourceTree = "<group>";
+		};
+		A6551C812C457DA100D413BF /* Ticket Demo */ = {
+			isa = PBXGroup;
+			children = (
+				A6551C772C43CCB100D413BF /* ProductsView.swift */,
+				A6551C7B2C43CEE600D413BF /* TicketsView.swift */,
+			);
+			path = "Ticket Demo";
+			sourceTree = "<group>";
+		};
+		A6551C822C457DBE00D413BF /* HistoryTab */ = {
+			isa = PBXGroup;
+			children = (
+				A6EED3A72C2CA46F00A4615C /* WorkoutHistoryView.swift */,
+			);
+			path = HistoryTab;
+			sourceTree = "<group>";
+		};
+		A6551C832C457DE000D413BF /* WorkoutTab */ = {
+			isa = PBXGroup;
+			children = (
+				A6551C752C41C64400D413BF /* WorkoutsView.swift */,
+				A6EED3A52C2CA41500A4615C /* WorkoutFormView.swift */,
+				A6551C5D2C3609E900D413BF /* WorkoutConfirmationView.swift */,
+			);
+			path = WorkoutTab;
+			sourceTree = "<group>";
+		};
+		A6551C842C457E1C00D413BF /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				A6551C732C41B8F700D413BF /* LoginView.swift */,
+				A6EED3352C2BAD1000A4615C /* ContentView.swift */,
+			);
+			path = LoginView;
 			sourceTree = "<group>";
 		};
 		A6B3ADA62C336CC900AD7D99 /* Frameworks */ = {
@@ -192,7 +242,6 @@
 				A6EED3A22C2CA3D100A4615C /* Views */,
 				A6EED39F2C2BE34400A4615C /* Shared */,
 				A6EED3332C2BAD1000A4615C /* WorkoutAppApp.swift */,
-				A6EED3352C2BAD1000A4615C /* ContentView.swift */,
 				A6EED3412C2BAD3E00A4615C /* AppDelegate.swift */,
 				A6EED3432C2BAD5800A4615C /* DataManager.swift */,
 				A6EED3452C2BAD6600A4615C /* SceneDelegate.swift */,
@@ -245,10 +294,11 @@
 			isa = PBXGroup;
 			children = (
 				A6EED3A32C2CA3EF00A4615C /* MainTabView.swift */,
-				A6EED3A72C2CA46F00A4615C /* WorkoutHistoryView.swift */,
+				A6551C842C457E1C00D413BF /* LoginView */,
+				A6551C832C457DE000D413BF /* WorkoutTab */,
+				A6551C822C457DBE00D413BF /* HistoryTab */,
+				A6551C812C457DA100D413BF /* Ticket Demo */,
 				A6EED3A92C2CA48D00A4615C /* SettingsView.swift */,
-				A6EED3A52C2CA41500A4615C /* WorkoutFormView.swift */,
-				A6551C5D2C3609E900D413BF /* WorkoutConfirmationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -258,6 +308,7 @@
 			children = (
 				A6EED39C2C2BE31D00A4615C /* DataModel.swift */,
 				A6551C5F2C36153100D413BF /* WorkoutFormViewModel.swift */,
+				A6551C792C43CD5B00D413BF /* TicketModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -282,6 +333,9 @@
 				A6B3ADA92C336CC900AD7D99 /* PBXTargetDependency */,
 			);
 			name = WorkoutApp;
+			packageProductDependencies = (
+				A6551C712C41B4EE00D413BF /* RealmSwift */,
+			);
 			productName = WorkoutApp;
 			productReference = A6EED3A02C2BF78700A4615C /* WorkoutApp.app */;
 			productType = "com.apple.product-type.application";
@@ -330,6 +384,9 @@
 				Base,
 			);
 			mainGroup = A6EED3272C2BAD1000A4615C;
+			packageReferences = (
+				A6551C702C41B4EE00D413BF /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
 			productRefGroup = A6EED3272C2BAD1000A4615C;
 			projectDirPath = "";
 			projectRoot = "";
@@ -375,14 +432,20 @@
 				A6EED3A82C2CA46F00A4615C /* WorkoutHistoryView.swift in Sources */,
 				A6EED3AA2C2CA48D00A4615C /* SettingsView.swift in Sources */,
 				A6551C5E2C3609E900D413BF /* WorkoutConfirmationView.swift in Sources */,
+				A6551C7A2C43CD5B00D413BF /* TicketModel.swift in Sources */,
 				A6B3ADA32C3366B600AD7D99 /* WatchConnector.swift in Sources */,
+				A6551C7C2C43CEE600D413BF /* TicketsView.swift in Sources */,
 				A6EED3442C2BAD5800A4615C /* DataManager.swift in Sources */,
 				A6551C5C2C35DFD900D413BF /* MainViewController.swift in Sources */,
 				A6551C5A2C35DEB100D413BF /* WorkoutConfirmationViewController.swift in Sources */,
 				A6EED3AD2C2CA53100A4615C /* WorkoutInfoModel.swift in Sources */,
+				A6551C802C4576FE00D413BF /* MongoDBManager.swift in Sources */,
+				A6551C782C43CCB100D413BF /* ProductsView.swift in Sources */,
 				A6EED3A42C2CA3EF00A4615C /* MainTabView.swift in Sources */,
 				A6EED3362C2BAD1000A4615C /* ContentView.swift in Sources */,
+				A6551C742C41B8F700D413BF /* LoginView.swift in Sources */,
 				A6EED3342C2BAD1000A4615C /* WorkoutAppApp.swift in Sources */,
+				A6551C762C41C64400D413BF /* WorkoutsView.swift in Sources */,
 				A6551C622C3F113300D413BF /* AppData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -391,7 +454,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A6B3ADAF2C3392A000AD7D99 /* DataModel.swift in Sources */,
 				A6B3ADAE2C3391CA00AD7D99 /* WorkoutInfoModel.swift in Sources */,
 				A6EED3502C2BADB900A4615C /* ContentView.swift in Sources */,
 				A6B3ADB12C33AC9700AD7D99 /* ActiveWorkoutVariable.swift in Sources */,
@@ -708,6 +770,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A6551C702C41B4EE00D413BF /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A6551C712C41B4EE00D413BF /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A6551C702C41B4EE00D413BF /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A6EED3282C2BAD1000A4615C /* Project object */;
 }

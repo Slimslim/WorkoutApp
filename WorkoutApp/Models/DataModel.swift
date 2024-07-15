@@ -1,14 +1,99 @@
-////
-////  DataModelShared.swift
-////  WorkoutApp
-////
-////  Created by Sélim Gawad on 6/25/24.
-////
 //
-//import Foundation
-//import CoreMotion
-//import SwiftData
+//  DataModelShared.swift
+//  WorkoutApp
 //
+//  Created by Sélim Gawad on 6/25/24.
+//
+
+
+import Foundation
+import CoreMotion
+import RealmSwift
+
+class Workout: Object, ObjectKeyIdentifiable{
+    @Persisted(primaryKey: true) var _id:ObjectId
+    @Persisted var created = Date()
+    @Persisted var username: String
+    @Persisted var notes: String?
+    @Persisted var isDataGood: Bool
+    @Persisted var info : WorkoutInfo?
+    @Persisted var data : WorkoutData?
+    
+    
+    convenience init(created: Date? = nil, username: String, notes: String? = nil, isDataGood: Bool = false, info: WorkoutInfo? = nil, data: WorkoutData? = nil){
+        self.init()
+        if let created = created {
+            self.created = created
+        }
+        self.username = username
+        self.notes = notes
+        self.isDataGood = isDataGood
+        self.info = info
+        self.data = data
+    }
+    
+}
+
+class WorkoutInfo: EmbeddedObject {
+    
+    @Persisted var movement: String
+    @Persisted var rounds: Int
+    @Persisted var reps: Int
+    @Persisted var weight: Double?
+    
+    convenience init( movement: String, rounds: Int, reps: Int, weight: Double? = nil) {
+        self.init()
+        self.movement = movement
+        self.rounds = rounds
+        self.reps = reps
+        self.weight = weight
+    }
+}
+
+class WorkoutData: EmbeddedObject {
+    @Persisted var accelerometerSnapshots = List <AccelerometerData>()
+    @Persisted var gyroscopeSnapshots = List <GyroscopeData>()
+    
+    convenience init(accelerometerSnapshots: [AccelerometerData], gyroscopeSnapshots: [GyroscopeData]) {
+        self.init()
+        self.accelerometerSnapshots.append(objectsIn: accelerometerSnapshots)
+        self.gyroscopeSnapshots.append(objectsIn: gyroscopeSnapshots)
+    }
+    
+}
+
+class AccelerometerData: EmbeddedObject {
+    @Persisted var timestamp: TimeInterval
+    @Persisted var accelerationX: Double
+    @Persisted var accelerationY: Double
+    @Persisted var accelerationZ: Double
+
+    convenience init(timestamp: TimeInterval, accelerationX: Double, accelerationY: Double, accelerationZ: Double) {
+        self.init()
+        self.timestamp = timestamp
+        self.accelerationX = accelerationX
+        self.accelerationY = accelerationY
+        self.accelerationZ = accelerationZ
+    }
+}
+
+class GyroscopeData: EmbeddedObject {
+    @Persisted var timestamp: TimeInterval
+    @Persisted var rotationX: Double
+    @Persisted var rotationY: Double
+    @Persisted var rotationZ: Double
+
+    convenience init(timestamp: TimeInterval, rotationX: Double, rotationY: Double, rotationZ: Double) {
+        self.init()
+        self.timestamp = timestamp
+        self.rotationX = rotationX
+        self.rotationY = rotationY
+        self.rotationZ = rotationZ
+    }
+}
+
+
+
 //@Model
 //class WorkoutDataChunk {
 //    var id: UUID
