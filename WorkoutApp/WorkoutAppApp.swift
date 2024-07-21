@@ -20,7 +20,9 @@ struct WorkoutAppApp: SwiftUI.App {
     var body: some Scene {
         WindowGroup {
 //            MainTabView()
-            ContentView()        }
+            ContentView()
+//            TestView()
+        }
     }
 }
 

@@ -6,13 +6,35 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct LogoutButtonView: View {
+    
+    @Binding var username: String
+    @State private var isConfirming = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button("Logout"){
+            isConfirming = true
+        }
+        .confirmationDialog("Are you sure you want to logout?", isPresented: $isConfirming) {
+            Button("Confirm Logout", role: .destructive){ logout()}
+            Button("Cancel", role: .cancel) {}
+        }
+    }
+    
+    private func logout(){
+        Task {
+            do {
+                try await realmApp.currentUser?.logOut()
+                username = ""
+            } catch {
+                print("Failed to logout: \(error.localizedDescription)")
+            }
+        }
     }
 }
 
-#Preview {
-    LogoutButtonView()
-}
+//#Preview {
+//    LogoutButtonView()
+//}

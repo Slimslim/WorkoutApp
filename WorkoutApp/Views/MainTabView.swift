@@ -10,7 +10,7 @@ import RealmSwift
 
 struct MainTabView: View {
     
-    let username:String
+    @Binding var username: String
     
     // Initialize SharedWorkoutInfo to be used in all child views before saving it to database
     @StateObject private var sharedWorkoutInfo = SharedWorkoutInfo.shared
@@ -31,7 +31,7 @@ struct MainTabView: View {
                         Label("History", systemImage: "list.bullet")
                     }
                 
-                SettingsView()
+                SettingsView(username: $username)
                     .tabItem {
                         Label("Settings", systemImage: "gear")
                     }

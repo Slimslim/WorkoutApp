@@ -5,19 +5,89 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
          <BreakpointContent
-            uuid = "58535D9E-2338-4EC1-913B-881C48D21B10"
+            uuid = "12EE4DD5-F6D5-46A7-8C9B-D686BE71834C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            symbolName = "UIViewAlertForUnsatisfiableConstraints"
+            moduleName = "">
+            <Locations>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
+         <BreakpointContent
+            uuid = "E5EC8110-6B3C-4731-923C-09B6E37E4614"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WorkoutApp/Views/WorkoutTab/WorkoutConfirmationView.swift"
+            symbolName = "WCSession"
+            moduleName = "">
+            <Locations>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "19BF81E0-58CF-48F9-A902-4E8A0F3139A2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WorkoutApp/Services/WatchConnector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
-            landmarkName = "addWorkout()"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "init(session:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "19BF81E0-58CF-48F9-A902-4E8A0F3139A2 - f6d2b85be40c7b68"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "default argument 0 of WorkoutApp.WatchConnector.init(session: __C.WCSession) -&gt; WorkoutApp.WatchConnector"
+                  moduleName = "WorkoutApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/selimgawad/Documents/2%20-%20Personal%20work/WorkoutApp/WorkoutApp/Services/WatchConnector.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24">
+               </Location>
+               <Location
+                  uuid = "19BF81E0-58CF-48F9-A902-4E8A0F3139A2 - ea4139847b58ed5e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "WorkoutApp.WatchConnector.__allocating_init(session: __C.WCSession) -&gt; WorkoutApp.WatchConnector"
+                  moduleName = "WorkoutApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/selimgawad/Documents/2%20-%20Personal%20work/WorkoutApp/WorkoutApp/Services/WatchConnector.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "19BF81E0-58CF-48F9-A902-4E8A0F3139A2 - 3acb6285292bdc20"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "WorkoutApp.WatchConnector.init(session: __C.WCSession) -&gt; WorkoutApp.WatchConnector"
+                  moduleName = "WorkoutApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/selimgawad/Documents/2%20-%20Personal%20work/WorkoutApp/WorkoutApp/Services/WatchConnector.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
