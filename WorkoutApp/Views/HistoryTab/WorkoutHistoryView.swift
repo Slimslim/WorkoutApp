@@ -15,30 +15,47 @@ struct WorkoutHistoryView: View {
     @Environment(\.realm) var realm
     
     let username: String
+    @State private var searchText = ""
     @State private var busy = false
     
     var body: some View {
+        
+        // filter list with search text
+        let filteredWorkouts = workouts.where{ Workout in
+            Workout.info.movement.contains(searchText, options: .caseInsensitive)
+            ||
+            Workout.username.contains(searchText, options: .caseInsensitive)
+        }
+        
         NavigationStack{
-            List{
-                ForEach(workouts) { workout in
-                    HStack{
-                        
+            
+            if busy == false {
+                List{
+                    ForEach(searchText.isEmpty ? workouts : filteredWorkouts) { workout in
                         HStack{
-                            Text(workout.info?.movement ?? "")
-                            Text("\(workout.info?.rounds ?? 0) X \(workout.info?.reps ?? 0)")
+                            
+                            HStack{
+                                Text(workout.info?.movement ?? "")
+                                Text("\(workout.info?.rounds ?? 0) X \(workout.info?.reps ?? 0)")
+                            }
+                            Spacer()
+                            Image(systemName: workout.isDataGood == true ? "checkmark" : "xmark")
+                                .foregroundColor(workout.isDataGood == true ? .green : .red)
+                                .font(.system(size: 15, weight: .semibold))
+                                .padding(.trailing)
                         }
-                        Spacer()
-                        Image(systemName: workout.isDataGood == true ? "checkmark" : "xmark")
-                            .foregroundColor(workout.isDataGood == true ? .green : .red)
-                            .font(.system(size: 15, weight: .semibold))
-                            .padding(.trailing)
+                        
                     }
-                    
                 }
+                .searchable(text: $searchText)
+                .listStyle(.plain)
+                .padding()
+                .navigationTitle("Collected Data")
+            } else {
+                ProgressView("Loading...")
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .background(Color.white.opacity(0.8))
             }
-            .listStyle(.plain)
-            .padding()
-            .navigationTitle("Collected Data")
         }
         /// Subscribe and unsubscribe from databse when in the view
         .onAppear(perform: {

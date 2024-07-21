@@ -15,21 +15,27 @@ class MongoDbManager {
     
     private init() {}
     
+    // Function to subscribe to "allWorkouts"
     func subscribe(realm: Realm, busy: Binding<Bool>) {
         let subscriptions = realm.subscriptions
+        // Check if subscription already exists
         if subscriptions.first(named: "allWorkouts") == nil {
+            // Set busy to true on the main thread
             DispatchQueue.main.async {
                 busy.wrappedValue = true
             }
+            // Add subscription and handle completion
             subscriptions.update {
                 subscriptions.append(QuerySubscription<Workout>(name: "allWorkouts"))
             } onComplete: { error in
+                // Handle subscription completion on the main thread
                 DispatchQueue.main.async {
                     if let error = error {
                         print("Failed to subscribe for all workouts: \(error.localizedDescription)")
                     } else {
                         print("Successfully subscribed to all workouts")
                     }
+                    // Set busy to false on completion
                     busy.wrappedValue = false
                 }
             }
@@ -38,23 +44,31 @@ class MongoDbManager {
         }
     }
     
+    // Function to unsubscribe from "allWorkouts"
     func unsubscribe(realm: Realm, busy: Binding<Bool>) {
         let subscriptions = realm.subscriptions
+        // Set busy to true on the main thread
         DispatchQueue.main.async {
             busy.wrappedValue = true
         }
+        // Remove subscription and handle completion
         subscriptions.update {
             subscriptions.remove(named: "allWorkouts")
         } onComplete: { error in
+            // Handle unsubscription completion on the main thread
             DispatchQueue.main.async {
                 if let error = error {
                     print("Failed to unsubscribe from all workouts: \(error.localizedDescription)")
                 } else {
                     print("Successfully unsubscribed from all workouts")
                 }
-                busy.wrappedValue = false
+                // Set busy to false on completion
+                DispatchQueue.main.async {
+                    busy.wrappedValue = false
+                }
             }
         }
     }
 }
+
 

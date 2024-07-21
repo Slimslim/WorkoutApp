@@ -127,8 +127,8 @@ struct WorkoutConfirmationView: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
             }
-            .onAppear(perform: { subscribe() })
-            .onDisappear( perform: { unsubscribe() })
+            .onAppear(perform: { MongoDbManager.shared.subscribe(realm: realm, busy: $busy) })
+            .onDisappear( perform: { MongoDbManager.shared.unsubscribe(realm: realm, busy: $busy) })
             .navigationTitle("Confirm Workout")
         }
     }
@@ -197,32 +197,32 @@ struct WorkoutConfirmationView: View {
         isPresented = false
     }
     
-    private func subscribe (){
-        let subscriptions = realm.subscriptions
-        if subscriptions.first(named: "allWorkouts") == nil {
-            busy = true
-            subscriptions.update {
-                subscriptions.append(QuerySubscription<Workout>(name: "allWorkouts"))
-            } onComplete: { error in
-                if let error = error {
-                    print("Failed to subscribe for all workouts: \(error.localizedDescription)")
-                }
-            }
-            busy = false
-        }
-    }
-    
-    
-    private func unsubscribe () {
-        let subscriptions = realm.subscriptions
-        subscriptions.update {
-            subscriptions.remove(named: "allWorkouts")
-        } onComplete: { error in
-            if let error = error{
-                print("Failed to unsubscripe for \("allWorkouts"): \(error.localizedDescription)")
-            }
-        }
-    }
+//    private func subscribe (){
+//        let subscriptions = realm.subscriptions
+//        if subscriptions.first(named: "allWorkouts") == nil {
+//            busy = true
+//            subscriptions.update {
+//                subscriptions.append(QuerySubscription<Workout>(name: "allWorkouts"))
+//            } onComplete: { error in
+//                if let error = error {
+//                    print("Failed to subscribe for all workouts: \(error.localizedDescription)")
+//                }
+//            }
+//            busy = false
+//        }
+//    }
+//    
+//    
+//    private func unsubscribe () {
+//        let subscriptions = realm.subscriptions
+//        subscriptions.update {
+//            subscriptions.remove(named: "allWorkouts")
+//        } onComplete: { error in
+//            if let error = error{
+//                print("Failed to unsubscripe for \("allWorkouts"): \(error.localizedDescription)")
+//            }
+//        }
+//    }
     
     func clearWorkout() {
         DispatchQueue.main.async {

@@ -20,6 +20,12 @@
 		A6551C7A2C43CD5B00D413BF /* TicketModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C792C43CD5B00D413BF /* TicketModel.swift */; };
 		A6551C7C2C43CEE600D413BF /* TicketsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C7B2C43CEE600D413BF /* TicketsView.swift */; };
 		A6551C802C4576FE00D413BF /* MongoDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C7F2C4576FE00D413BF /* MongoDBManager.swift */; };
+		A6551C862C45AB0800D413BF /* LogoutButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C852C45AB0800D413BF /* LogoutButtonView.swift */; };
+		A6551C882C45D26A00D413BF /* EmailLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C872C45D26A00D413BF /* EmailLoginView.swift */; };
+		A6551C8A2C4664E100D413BF /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C892C4664E100D413BF /* RegisterView.swift */; };
+		A6551C8B2C468F1E00D413BF /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = A6551C712C41B4EE00D413BF /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		A6551C8D2C46E32500D413BF /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C8C2C46E32500D413BF /* CustomViews.swift */; };
+		A6551C8F2C4C4B3400D413BF /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C8E2C4C4B3400D413BF /* TestView.swift */; };
 		A6B3ADA32C3366B600AD7D99 /* WatchConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B3ADA22C3366B600AD7D99 /* WatchConnector.swift */; };
 		A6B3ADA52C3367FD00AD7D99 /* PhoneConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B3ADA42C3367FD00AD7D99 /* PhoneConnector.swift */; };
 		A6B3ADA72C336CC900AD7D99 /* WatchWourkoutApp Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A6EED3A12C2BF78700A4615C /* WatchWourkoutApp Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -82,6 +88,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				A6551C8B2C468F1E00D413BF /* RealmSwift in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,6 +108,11 @@
 		A6551C792C43CD5B00D413BF /* TicketModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketModel.swift; sourceTree = "<group>"; };
 		A6551C7B2C43CEE600D413BF /* TicketsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsView.swift; sourceTree = "<group>"; };
 		A6551C7F2C4576FE00D413BF /* MongoDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MongoDBManager.swift; sourceTree = "<group>"; };
+		A6551C852C45AB0800D413BF /* LogoutButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutButtonView.swift; sourceTree = "<group>"; };
+		A6551C872C45D26A00D413BF /* EmailLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginView.swift; sourceTree = "<group>"; };
+		A6551C892C4664E100D413BF /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		A6551C8C2C46E32500D413BF /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
+		A6551C8E2C4C4B3400D413BF /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		A6B3ADA12C33543800AD7D99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A6B3ADA22C3366B600AD7D99 /* WatchConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnector.swift; sourceTree = "<group>"; };
 		A6B3ADA42C3367FD00AD7D99 /* PhoneConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneConnector.swift; sourceTree = "<group>"; };
@@ -209,6 +221,9 @@
 			children = (
 				A6551C732C41B8F700D413BF /* LoginView.swift */,
 				A6EED3352C2BAD1000A4615C /* ContentView.swift */,
+				A6551C872C45D26A00D413BF /* EmailLoginView.swift */,
+				A6551C892C4664E100D413BF /* RegisterView.swift */,
+				A6551C8C2C46E32500D413BF /* CustomViews.swift */,
 			);
 			path = LoginView;
 			sourceTree = "<group>";
@@ -299,6 +314,8 @@
 				A6551C822C457DBE00D413BF /* HistoryTab */,
 				A6551C812C457DA100D413BF /* Ticket Demo */,
 				A6EED3A92C2CA48D00A4615C /* SettingsView.swift */,
+				A6551C852C45AB0800D413BF /* LogoutButtonView.swift */,
+				A6551C8E2C4C4B3400D413BF /* TestView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -426,17 +443,22 @@
 				A6551C582C34DD5F00D413BF /* ActiveWorkoutVariable.swift in Sources */,
 				A6EED3462C2BAD6600A4615C /* SceneDelegate.swift in Sources */,
 				A6EED3422C2BAD3E00A4615C /* AppDelegate.swift in Sources */,
+				A6551C8F2C4C4B3400D413BF /* TestView.swift in Sources */,
 				A6EED3A62C2CA41500A4615C /* WorkoutFormView.swift in Sources */,
 				A6EED39D2C2BE31D00A4615C /* DataModel.swift in Sources */,
 				A6551C602C36153100D413BF /* WorkoutFormViewModel.swift in Sources */,
+				A6551C862C45AB0800D413BF /* LogoutButtonView.swift in Sources */,
 				A6EED3A82C2CA46F00A4615C /* WorkoutHistoryView.swift in Sources */,
 				A6EED3AA2C2CA48D00A4615C /* SettingsView.swift in Sources */,
+				A6551C8D2C46E32500D413BF /* CustomViews.swift in Sources */,
+				A6551C8A2C4664E100D413BF /* RegisterView.swift in Sources */,
 				A6551C5E2C3609E900D413BF /* WorkoutConfirmationView.swift in Sources */,
 				A6551C7A2C43CD5B00D413BF /* TicketModel.swift in Sources */,
 				A6B3ADA32C3366B600AD7D99 /* WatchConnector.swift in Sources */,
 				A6551C7C2C43CEE600D413BF /* TicketsView.swift in Sources */,
 				A6EED3442C2BAD5800A4615C /* DataManager.swift in Sources */,
 				A6551C5C2C35DFD900D413BF /* MainViewController.swift in Sources */,
+				A6551C882C45D26A00D413BF /* EmailLoginView.swift in Sources */,
 				A6551C5A2C35DEB100D413BF /* WorkoutConfirmationViewController.swift in Sources */,
 				A6EED3AD2C2CA53100A4615C /* WorkoutInfoModel.swift in Sources */,
 				A6551C802C4576FE00D413BF /* MongoDBManager.swift in Sources */,
@@ -540,6 +562,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				WATCHOS_DEPLOYMENT_TARGET = 10.5;
 			};
 			name = Debug;
 		};
@@ -596,6 +619,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.5;
 			};
 			name = Release;
 		};

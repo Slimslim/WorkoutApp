@@ -14,9 +14,10 @@ struct ContentView: View {
     var body: some View {
         NavigationView{
             if username == "" {
-                LoginView(username: $username)
+//                LoginView(username: $username)
+                MainTabView(username: $username)
             } else {
-                MainTabView(username: username)
+                MainTabView(username: $username)
             }
         }
     }
