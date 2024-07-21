@@ -20,7 +20,16 @@ class SharedWorkoutInfo: ObservableObject, Codable {
     func reset() {
         DispatchQueue.main.async {
             self.workoutId = nil
-            self.workoutInfo = nil
+            self.workoutInfo = WorkoutInformation(
+                date: Date(),
+                username: "",
+                movement: "Back Squat", // Set to the first valid movement
+                rounds: 0,
+                reps: 0,
+                weight: nil,
+                notes: "",
+                isDataGood: false
+            )
             self.workoutData = nil
         }
     }

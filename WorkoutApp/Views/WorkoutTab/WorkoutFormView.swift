@@ -67,12 +67,14 @@ struct WorkoutFormView: View {
                     Text("Submit")
                         .frame(maxWidth: .infinity, alignment: .center)
                         .disabled(selectedMovement.isWeighted && weight.isEmpty)
+                    /// Add a disable if the watch is not connected.
+                    /// Maybe add a text to indicate that the watch is not connecte
                 }
             }
             .navigationTitle("New Workout")
         }
         .sheet(isPresented: $watchConnector.isShowingWorkoutConfirmationView) {
-            WorkoutConfirmationView()
+            WorkoutConfirmationView(isPresented: $showingWorkoutConfirmation)
         }
     }
 

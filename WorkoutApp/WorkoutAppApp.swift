@@ -7,20 +7,20 @@
 
 import SwiftUI
 import SwiftData
+import RealmSwift
+
+let realmApp = RealmSwift.App(id: "workoutapp-fepvuis")
 
 @main
-struct WorkoutAppApp: App {
+struct WorkoutAppApp: SwiftUI.App {
     // Inject AppDelegate
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject var watchConnector = WatchConnector()
     
     var body: some Scene {
         WindowGroup {
-            MainTabView()
-                .onAppear {
-//                    WatchConnector()
-                }
-        }
+//            MainTabView()
+            ContentView()        }
     }
 }
 
