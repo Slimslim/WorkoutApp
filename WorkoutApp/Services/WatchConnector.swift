@@ -15,17 +15,34 @@ import WatchConnectivity
 class WatchConnector: NSObject, WCSessionDelegate, ObservableObject {
     
     var session: WCSession
+    
+    // Delegate to handle workout data reception
     weak var delegate: WorkoutDataReceiver?
+    
+    // Singleton instance
+    static let shared = WatchConnector()
     
     //Variable to show workout for confirmation. Flag to trigger Confirmation view
     @Published var isShowingWorkoutConfirmationView = false
     
+//    init(session: WCSession = .default){
+//        self.session = session
+//        super.init()
+//        session.delegate = self
+//        session.activate()
+//    }
     
-    init(session: WCSession = .default){
-        self.session = session
+    
+    // Private initializer to enforce singleton pattern
+    private override init() {
+        if WCSession.isSupported() {
+            self.session = WCSession.default
+        } else {
+            fatalError("WCSession is not supported on this device.")
+        }
         super.init()
-        session.delegate = self
-        session.activate()
+        self.session.delegate = self
+        self.session.activate()
     }
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
@@ -93,22 +110,56 @@ class WatchConnector: NSObject, WCSessionDelegate, ObservableObject {
         }
     }
     
+    // Receiving files from the watch
+    func session(_ session: WCSession, didReceive file: WCSessionFile) {
+        let fileURL = file.fileURL
+        
+        // Move file to a desired location
+        let fileManager = FileManager.default
+        let destinationURL = getDocumentsDirectory().appendingPathComponent("received_workoutData.json")
+        
+        do {
+            // If file already exists, remove it
+            if fileManager.fileExists(atPath: destinationURL.path) {
+                try fileManager.removeItem(at: destinationURL)
+            }
+            try fileManager.moveItem(at: fileURL, to: destinationURL)
+            print("File received and saved to: \(destinationURL)")
+            
+            // Optionally, decode the data to use it
+            let data = try Data(contentsOf: destinationURL)
+            let sharedWorkoutInfo = try JSONDecoder().decode(SharedWorkoutInfo.self, from: data)
+            
+            // Process the received workout info
+            self.processReceivedWorkoutInfo(sharedWorkoutInfo)
+            
+        } catch {
+            print("Failed to save received file: \(error)")
+        }
+    }
+
+    func getDocumentsDirectory() -> URL {
+        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    }
+
+    
     // Process the received SharedWorkoutInfo
     func processReceivedWorkoutInfo(_ sharedWorkoutInfo: SharedWorkoutInfo) {
-        
-        // Update the singleton instance with received data
-        SharedWorkoutInfo.shared.workoutId = sharedWorkoutInfo.workoutId
-        SharedWorkoutInfo.shared.workoutInfo = sharedWorkoutInfo.workoutInfo
-        SharedWorkoutInfo.shared.workoutData = sharedWorkoutInfo.workoutData
-        
-        // Print the received workout info for verification
-        SharedWorkoutInfo.shared.printWorkoutInfo()
-        
-        // Set confitmation view to display
-        isShowingWorkoutConfirmationView = true
-        
-        // Add additional logic to handle the received data as needed
-        delegate?.didReceiveWorkoutInfo()
+        DispatchQueue.main.async {
+            // Update the singleton instance with received data
+            SharedWorkoutInfo.shared.workoutId = sharedWorkoutInfo.workoutId
+            SharedWorkoutInfo.shared.workoutInfo = sharedWorkoutInfo.workoutInfo
+            SharedWorkoutInfo.shared.workoutData = sharedWorkoutInfo.workoutData
+            
+            // Print the received workout info for verification
+            SharedWorkoutInfo.shared.printWorkoutInfo()
+            
+            // Set confirmation view to display
+            self.isShowingWorkoutConfirmationView = true
+            
+            // Notify delegate
+            self.delegate?.didReceiveWorkoutInfo()
+        }
     }
     
 }

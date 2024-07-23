@@ -15,7 +15,10 @@ class SharedWorkoutInfo: ObservableObject, Codable {
     @Published var workoutInfo: WorkoutInformation?
     @Published var workoutData: WorkoutMotionData?
 
-    private init() {} // Prevents others from using the default '()' initializer for this class.
+    private init() {
+        // Initialize with empty data
+        self.workoutData = WorkoutMotionData(accelerometerSnapshots: [], gyroscopeSnapshots: [])
+    } // Prevents others from using the default '()' initializer for this class.
     
     func reset() {
         DispatchQueue.main.async {
@@ -30,7 +33,8 @@ class SharedWorkoutInfo: ObservableObject, Codable {
                 notes: "",
                 isDataGood: false
             )
-            self.workoutData = nil
+            // Initialize with empty data
+            self.workoutData = WorkoutMotionData(accelerometerSnapshots: [], gyroscopeSnapshots: [])
         }
     }
     
@@ -70,8 +74,8 @@ class SharedWorkoutInfo: ObservableObject, Codable {
         }
         
         if let data = workoutData {
-            print("Accelerometer Snapshots: \(data.accelerometerSnapshots)")
-            print("Gyroscope Snapshots: \(data.gyroscopeSnapshots)")
+            print("Accelerometer Snapshots count: \(data.accelerometerSnapshots.count)")
+            print("Gyroscope Snapshots count: \(data.gyroscopeSnapshots.count)")
         } else {
             print("No motion data available.")
         }

@@ -19,7 +19,7 @@ class WorkoutFormViewModel: ObservableObject, WorkoutDataReceiver {
     private var watchConnector: WatchConnector
 
     init() {
-        self.watchConnector = WatchConnector()
+        self.watchConnector = WatchConnector.shared
         self.watchConnector.delegate = self
     }
 

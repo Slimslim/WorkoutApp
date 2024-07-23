@@ -10,15 +10,32 @@ import WatchConnectivity
 
 class PhoneConnector: NSObject, WCSessionDelegate, ObservableObject {
     
-    var session: WCSession
+    // Singleton instance
+    static let shared = PhoneConnector()
     
-    init(session: WCSession = .default){
-        self.session = session
+    // WCSession instance
+    private let session: WCSession
+    
+//    init(session: WCSession = .default){
+//        self.session = session
+//        super.init()
+//        session.delegate = self
+//        session.activate()
+//    }
+    
+    // Private initializer to enforce singleton pattern
+    private override init() {
+        if WCSession.isSupported() {
+            self.session = WCSession.default
+        } else {
+            fatalError("WCSession is not supported on this device.")
+        }
         super.init()
-        session.delegate = self
-        session.activate()
+        self.session.delegate = self
+        self.session.activate()
     }
     
+    // WCSessionDelegate methods
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         if let error = error {
             print("WCSession activation failed with error: \(error.localizedDescription)")
@@ -70,5 +87,39 @@ class PhoneConnector: NSObject, WCSessionDelegate, ObservableObject {
             print("Phone is not reachable")
         }
     }
+    
+    
+    /// Sending a file to the phone
+    func transferFileToPhone(fileURL: URL) {
+        if WCSession.default.isReachable {
+            WCSession.default.transferFile(fileURL, metadata: nil)
+            print("File transfer initiated")
+        } else {
+            print("Watch is not reachable")
+        }
+    }
+    
+    /// Function to save the data in a file to transfer to the iPhone
+    func saveWorkoutInfoToFile(completion: @escaping (URL) -> Void) {
+        let fileManager = FileManager.default
+        let urls = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
+        guard let documentDirectory = urls.first else {
+            print("Failed to access document directory")
+            return
+        }
+        
+        let fileURL = documentDirectory.appendingPathComponent("workoutData.json")
+        
+        do {
+            let data = try JSONEncoder().encode(SharedWorkoutInfo.shared)
+            try data.write(to: fileURL)
+            print("Workout data saved to file: \(fileURL)")
+            completion(fileURL)
+        } catch {
+            print("Failed to write workout data to file: \(error)")
+        }
+    }
+    
+    
 }
 

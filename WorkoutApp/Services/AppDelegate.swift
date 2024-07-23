@@ -8,22 +8,21 @@
 import UIKit
 import WatchConnectivity
 
-//class AppDelegate: UIResponder, UIApplicationDelegate {
-//
-//    var window: UIWindow?
-//    let watchConnectivityManager = WatchConnectivityManager()
-//
-//    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//        NotificationCenter.default.addObserver(self, selector: #selector(handleWorkoutMessage(_:)), name: Notification.Name("WorkoutMessageReceived"), object: nil)
-//        return true
-//    }
-//
-//    @objc func handleWorkoutMessage(_ notification: Notification) {
-//        if let message = notification.userInfo?["message"] as? String {
-//            print("Workout message received: \(message)")
-//            // Handle the received message as needed
-//        }
-//    }
-//
-//    // Other app delegate methods...
-//}
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+    var window: UIWindow?
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        Services.shared.configureAudioSession()
+        return true
+    }
+
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        Services.shared.applicationDidEnterBackground()
+    }
+
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        Services.shared.applicationWillEnterForeground()
+    }
+}
+
