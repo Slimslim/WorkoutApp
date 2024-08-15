@@ -10,19 +10,23 @@ import HealthKit
 import CoreMotion
 import WatchConnectivity
 import WatchKit
-import SwiftData
+//import SwiftData
 
 
 class MotionManager: NSObject, ObservableObject {
     
-    let phoneConnector = PhoneConnector()
-    
+    let phoneConnector = PhoneConnector.shared
     let healthStore = HKHealthStore()
-    private var sensorManager = CMBatchedSensorManager()
+    
     @Published var isCollecting = false
+    
+    private var sensorManager = CMBatchedSensorManager()
     private var workoutSession: HKWorkoutSession?
     private var builder: HKLiveWorkoutBuilder?
     private var runtimeSession: WKExtendedRuntimeSession?
+    
+    var dataCount = 0
+    let maxDataCount = 10
     
     // Properties to hold the collected data
     private var accelerometerSnapshots: [AccelerometerSnapshot] = []
@@ -33,11 +37,11 @@ class MotionManager: NSObject, ObservableObject {
 //    @Published var sharedWorkoutInfo: SharedWorkoutInfo?
     @Published var sharedWorkoutInfo: SharedWorkoutInfo = .shared
     
-    // Properties for SwiftData
-    private var context: ModelContext?
-    func setContext(_ context: ModelContext) {
-            self.context = context
-        }
+//    // Properties for SwiftData
+//    private var context: ModelContext?
+//    func setContext(_ context: ModelContext) {
+//            self.context = context
+//        }
     
     func start(workoutType: HKWorkoutActivityType) {
         isCollecting = true
@@ -49,8 +53,9 @@ class MotionManager: NSObject, ObservableObject {
     func stop() {
         stopDataCollection()
         stopWorkoutSession()
+        // Save the data, encode it into a file and send it to the phone
         saveData()
-        phoneConnector.sendDataToPhone(data: SharedWorkoutInfo.shared)
+        //phoneConnector.sendDataToPhone(data: SharedWorkoutInfo.shared)
     }
     
     private func startWorkoutSession(workoutType: HKWorkoutActivityType) {
@@ -119,15 +124,17 @@ class MotionManager: NSObject, ObservableObject {
             do {
                 for try await dataArray in sensorManager.accelerometerUpdates(){
                     for data in dataArray{
-                        let snapshot = AccelerometerSnapshot(
-                            timestamp: data.timestamp,
-                            accelerationX: data.acceleration.x,
-                            accelerationY: data.acceleration.y,
-                            accelerationZ: data.acceleration.z
-                        )
-                        accelerometerSnapshots.append(snapshot)
-                        //                            print("this is the data: \(snapshot)")
-                        //                            print("Current Accelerometer Data: \(accelerometerSnapshots)")
+                        if self.dataCount < self.maxDataCount{
+                            let snapshot = AccelerometerSnapshot(
+                                timestamp: data.timestamp,
+                                accelerationX: data.acceleration.x,
+                                accelerationY: data.acceleration.y,
+                                accelerationZ: data.acceleration.z
+                            )
+                            accelerometerSnapshots.append(snapshot)
+//                            print("Accelerometer data appended: \(snapshot)")
+//                            print("Current Accelerometer Data: \(accelerometerSnapshots)")
+                        }
                     }
                 }
                 
@@ -148,6 +155,7 @@ class MotionManager: NSObject, ObservableObject {
                             rotationZ: data.rotationRate.z
                         )
                         gyroscopeSnapshots.append(snapshot)
+                        //                            print("Gyroscope data appended: \(snapshot)")
                     }
                 }
                 
@@ -160,6 +168,7 @@ class MotionManager: NSObject, ObservableObject {
     func stopDataCollection() {
         sensorManager.stopAccelerometerUpdates()
         sensorManager.stopDeviceMotionUpdates()
+//        print("Current Accelerometer Data: \(accelerometerSnapshots)")
         isCollecting = false
     }
     
@@ -191,15 +200,31 @@ class MotionManager: NSObject, ObservableObject {
     
     /// Function to gather and save all the data in one object
     func saveData() {
-//        guard let workoutInfo = workoutInfo else {
-//            print("No workout info to save")
-//            return
-//        }
+        print("Saving data...")
+//        print("Accelerometer data count: \(accelerometerSnapshots.count)")
+//        print("Gyroscope data count: \(gyroscopeSnapshots.count)")
+        
+        // Ensure workoutData is initialized
+        if sharedWorkoutInfo.workoutData == nil {
+            sharedWorkoutInfo.workoutData = WorkoutMotionData(accelerometerSnapshots: [], gyroscopeSnapshots: [])
+        }
+        
         sharedWorkoutInfo.workoutData?.accelerometerSnapshots = self.accelerometerSnapshots
         sharedWorkoutInfo.workoutData?.gyroscopeSnapshots = self.gyroscopeSnapshots
         sharedWorkoutInfo.printWorkoutInfo()
         
+        // Save workout data to file
+        self.phoneConnector.saveWorkoutInfoToFile { fileURL in
+            // Transfer the file to the phone
+            self.phoneConnector.transferFileToPhone(fileURL: fileURL)
         }
+        
+    }
+    
+    
+    
+    
+    
 }
 
 extension MotionManager: WKExtendedRuntimeSessionDelegate {

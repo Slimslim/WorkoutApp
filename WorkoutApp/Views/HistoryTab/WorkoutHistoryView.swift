@@ -28,23 +28,27 @@ struct WorkoutHistoryView: View {
         }
         
         NavigationStack{
-            
-            if busy == false {
-                List{
+            if !busy {
+                List {
                     ForEach(searchText.isEmpty ? workouts : filteredWorkouts) { workout in
-                        HStack{
-                            
-                            HStack{
-                                Text(workout.info?.movement ?? "")
-                                Text("\(workout.info?.rounds ?? 0) X \(workout.info?.reps ?? 0)")
+                        HStack {
+                            HStack {
+                                let movement = workout.info?.movement ?? ""
+                                let rounds = workout.info?.rounds ?? 0
+                                let reps = workout.info?.reps ?? 0
+                                
+                                Text(movement)
+                                Text("\(rounds) X \(reps)")
+                                    .onAppear {
+                                        print("Movement: \(movement), Rounds: \(rounds), Reps: \(reps)")
+                                    }
                             }
                             Spacer()
-                            Image(systemName: workout.isDataGood == true ? "checkmark" : "xmark")
-                                .foregroundColor(workout.isDataGood == true ? .green : .red)
+                            Image(systemName: workout.isDataGood ? "checkmark" : "xmark")
+                                .foregroundColor(workout.isDataGood ? .green : .red)
                                 .font(.system(size: 15, weight: .semibold))
                                 .padding(.trailing)
                         }
-                        
                     }
                 }
                 .searchable(text: $searchText)

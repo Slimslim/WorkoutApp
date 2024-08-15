@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SwiftData
+//import SwiftData
 import RealmSwift
 
 let realmApp = RealmSwift.App(id: "workoutapp-fepvuis")
@@ -15,19 +15,22 @@ let realmApp = RealmSwift.App(id: "workoutapp-fepvuis")
 struct WorkoutAppApp: SwiftUI.App {
     // Inject AppDelegate
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @StateObject var watchConnector = WatchConnector()
+    @StateObject var watchConnector = WatchConnector.shared
     
     var body: some Scene {
         WindowGroup {
 //            MainTabView()
             ContentView()
+                .environmentObject(watchConnector)
 //            TestView()
         }
     }
 }
 
-class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        return true
-    }
-}
+
+
+//class AppDelegate: NSObject, UIApplicationDelegate {
+//    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+//        return true
+//    }
+//}

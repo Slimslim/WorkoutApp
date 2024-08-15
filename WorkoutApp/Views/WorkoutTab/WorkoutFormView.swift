@@ -10,7 +10,7 @@ import SwiftUI
 struct WorkoutFormView: View {
     
     @StateObject private var viewModel = WorkoutFormViewModel()
-    @StateObject private var watchConnector = WatchConnector()
+    @EnvironmentObject var watchConnector: WatchConnector
     
     @State private var showingWorkoutConfirmation = false
     
@@ -33,6 +33,7 @@ struct WorkoutFormView: View {
     @State private var weight: String = ""
     @State private var notes: String = ""
     @State private var isDataGood: Bool = false
+    
 
     var body: some View {
         NavigationView {
@@ -44,7 +45,7 @@ struct WorkoutFormView: View {
                         }
                     }
                 }
-
+                
                 Section(header: Text("Workout Details")) {
                     Picker("Movement: ", selection: $selectedMovement) {
                         ForEach(workoutMovements, id: \.self) { movement in
@@ -62,7 +63,7 @@ struct WorkoutFormView: View {
                         }
                     }
                 }
-
+                
                 Button(action: submitWorkout) {
                     Text("Submit")
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -72,12 +73,13 @@ struct WorkoutFormView: View {
                 }
             }
             .navigationTitle("New Workout")
+            .scrollDismissesKeyboard(.immediately)
         }
         .sheet(isPresented: $watchConnector.isShowingWorkoutConfirmationView) {
             WorkoutConfirmationView(isPresented: $showingWorkoutConfirmation)
         }
     }
-
+    
     func submitWorkout() {
         
         // Handle the weight input

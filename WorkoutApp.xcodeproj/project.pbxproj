@@ -32,6 +32,9 @@
 		A6B3ADAB2C336CDD00AD7D99 /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B3ADAA2C336CDD00AD7D99 /* WatchConnectivity.framework */; };
 		A6B3ADAE2C3391CA00AD7D99 /* WorkoutInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EED3AC2C2CA53100A4615C /* WorkoutInfoModel.swift */; };
 		A6B3ADB12C33AC9700AD7D99 /* ActiveWorkoutVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B3ADB02C33AC9700AD7D99 /* ActiveWorkoutVariable.swift */; };
+		A6BA51682C4EB7B80037943D /* AudioAndHaptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6BA51672C4EB7B80037943D /* AudioAndHaptics.swift */; };
+		A6BA516A2C6DB5ED0037943D /* WorkoutState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6BA51692C6DB5ED0037943D /* WorkoutState.swift */; };
+		A6BA516B2C6DB5ED0037943D /* WorkoutState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6BA51692C6DB5ED0037943D /* WorkoutState.swift */; };
 		A6EED3342C2BAD1000A4615C /* WorkoutAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EED3332C2BAD1000A4615C /* WorkoutAppApp.swift */; };
 		A6EED3362C2BAD1000A4615C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EED3352C2BAD1000A4615C /* ContentView.swift */; };
 		A6EED3382C2BAD1400A4615C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6EED3372C2BAD1400A4615C /* Assets.xcassets */; };
@@ -118,6 +121,8 @@
 		A6B3ADA42C3367FD00AD7D99 /* PhoneConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneConnector.swift; sourceTree = "<group>"; };
 		A6B3ADAA2C336CDD00AD7D99 /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = System/Library/Frameworks/WatchConnectivity.framework; sourceTree = SDKROOT; };
 		A6B3ADB02C33AC9700AD7D99 /* ActiveWorkoutVariable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveWorkoutVariable.swift; sourceTree = "<group>"; };
+		A6BA51672C4EB7B80037943D /* AudioAndHaptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAndHaptics.swift; sourceTree = "<group>"; };
+		A6BA51692C6DB5ED0037943D /* WorkoutState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutState.swift; sourceTree = "<group>"; };
 		A6EED3332C2BAD1000A4615C /* WorkoutAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutAppApp.swift; sourceTree = "<group>"; };
 		A6EED3352C2BAD1000A4615C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A6EED3372C2BAD1400A4615C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -164,10 +169,12 @@
 		A60A510A2C32536D00181199 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				A6EED3412C2BAD3E00A4615C /* AppDelegate.swift */,
 				A6B3ADA22C3366B600AD7D99 /* WatchConnector.swift */,
 				A6551C592C35DEB100D413BF /* WorkoutConfirmationViewController.swift */,
 				A6551C5B2C35DFD900D413BF /* MainViewController.swift */,
 				A6551C7F2C4576FE00D413BF /* MongoDBManager.swift */,
+				A6BA51672C4EB7B80037943D /* AudioAndHaptics.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -185,6 +192,7 @@
 			children = (
 				A6EED3AC2C2CA53100A4615C /* WorkoutInfoModel.swift */,
 				A6B3ADB02C33AC9700AD7D99 /* ActiveWorkoutVariable.swift */,
+				A6BA51692C6DB5ED0037943D /* WorkoutState.swift */,
 			);
 			path = SharedFiles;
 			sourceTree = "<group>";
@@ -257,7 +265,6 @@
 				A6EED3A22C2CA3D100A4615C /* Views */,
 				A6EED39F2C2BE34400A4615C /* Shared */,
 				A6EED3332C2BAD1000A4615C /* WorkoutAppApp.swift */,
-				A6EED3412C2BAD3E00A4615C /* AppDelegate.swift */,
 				A6EED3432C2BAD5800A4615C /* DataManager.swift */,
 				A6EED3452C2BAD6600A4615C /* SceneDelegate.swift */,
 				A6EED3372C2BAD1400A4615C /* Assets.xcassets */,
@@ -451,10 +458,12 @@
 				A6EED3A82C2CA46F00A4615C /* WorkoutHistoryView.swift in Sources */,
 				A6EED3AA2C2CA48D00A4615C /* SettingsView.swift in Sources */,
 				A6551C8D2C46E32500D413BF /* CustomViews.swift in Sources */,
+				A6BA516A2C6DB5ED0037943D /* WorkoutState.swift in Sources */,
 				A6551C8A2C4664E100D413BF /* RegisterView.swift in Sources */,
 				A6551C5E2C3609E900D413BF /* WorkoutConfirmationView.swift in Sources */,
 				A6551C7A2C43CD5B00D413BF /* TicketModel.swift in Sources */,
 				A6B3ADA32C3366B600AD7D99 /* WatchConnector.swift in Sources */,
+				A6BA51682C4EB7B80037943D /* AudioAndHaptics.swift in Sources */,
 				A6551C7C2C43CEE600D413BF /* TicketsView.swift in Sources */,
 				A6EED3442C2BAD5800A4615C /* DataManager.swift in Sources */,
 				A6551C5C2C35DFD900D413BF /* MainViewController.swift in Sources */,
@@ -477,6 +486,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6B3ADAE2C3391CA00AD7D99 /* WorkoutInfoModel.swift in Sources */,
+				A6BA516B2C6DB5ED0037943D /* WorkoutState.swift in Sources */,
 				A6EED3502C2BADB900A4615C /* ContentView.swift in Sources */,
 				A6B3ADB12C33AC9700AD7D99 /* ActiveWorkoutVariable.swift in Sources */,
 				A6EED35E2C2BAE2A00A4615C /* MotionManager.swift in Sources */,

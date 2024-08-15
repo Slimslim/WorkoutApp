@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @EnvironmentObject var phoneConnector: PhoneConnector
+//    @Environment(\.modelContext) private var context
+    
     @StateObject private var sharedWorkoutInfo = SharedWorkoutInfo.shared
-    @StateObject var phoneConnector = PhoneConnector()
     @StateObject private var motionManager = MotionManager()
+    
     @State private var sessionStarted = false
-    @Environment(\.modelContext) private var context
-    
-    
-
+     
     var body: some View {
         VStack {
             Text(workoutInfoText)
@@ -33,7 +34,7 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            motionManager.setContext(context)
+//            motionManager.setContext(context)
             motionManager.requestHKAuthorization()
             // Any additional setup if needed
         }
@@ -66,10 +67,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(PhoneConnector.shared)
     }
-}
-
-
-#Preview {
-    ContentView()
 }
