@@ -263,7 +263,6 @@
 				A60A510A2C32536D00181199 /* Services */,
 				A6EED3AB2C2CA51600A4615C /* Models */,
 				A6EED3A22C2CA3D100A4615C /* Views */,
-				A6EED39F2C2BE34400A4615C /* Shared */,
 				A6EED3332C2BAD1000A4615C /* WorkoutAppApp.swift */,
 				A6EED3432C2BAD5800A4615C /* DataManager.swift */,
 				A6EED3452C2BAD6600A4615C /* SceneDelegate.swift */,
@@ -303,13 +302,6 @@
 				A6EED3542C2BADBC00A4615C /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		A6EED39F2C2BE34400A4615C /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Shared;
 			sourceTree = "<group>";
 		};
 		A6EED3A22C2CA3D100A4615C /* Views */ = {

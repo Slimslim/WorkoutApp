@@ -17,6 +17,7 @@ struct WorkoutAiAppWatchApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(phoneConnector)
+                .environmentObject(WorkoutStateManager.shared)
                 .onAppear {
                 }
         }
