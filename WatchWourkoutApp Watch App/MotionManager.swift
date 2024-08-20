@@ -56,6 +56,10 @@ class MotionManager: NSObject, ObservableObject {
         // Save the data, encode it into a file and send it to the phone
         saveData()
         //phoneConnector.sendDataToPhone(data: SharedWorkoutInfo.shared)
+        
+        // Reinitialize sensor and clear the data after saving
+        reinitializeSensorManager()
+        clearMotionData()
     }
     
     private func startWorkoutSession(workoutType: HKWorkoutActivityType) {
@@ -168,6 +172,10 @@ class MotionManager: NSObject, ObservableObject {
     func stopDataCollection() {
         sensorManager.stopAccelerometerUpdates()
         sensorManager.stopDeviceMotionUpdates()
+//        //Added to fully stop and reset Sensor
+//        accelerometerSnapshots.removeAll()
+//        gyroscopeSnapshots.removeAll()
+        
 //        print("Current Accelerometer Data: \(accelerometerSnapshots)")
         isCollecting = false
     }
@@ -221,9 +229,14 @@ class MotionManager: NSObject, ObservableObject {
         
     }
     
+    func clearMotionData() {
+        accelerometerSnapshots.removeAll()
+        gyroscopeSnapshots.removeAll()
+    }
     
-    
-    
+    func reinitializeSensorManager() {
+        sensorManager = CMBatchedSensorManager()
+    }
     
 }
 

@@ -16,16 +16,20 @@ class WorkoutFormViewModel: ObservableObject, WorkoutDataReceiver {
     @Published var showingWorkoutConfirmation = false
     @Published var notes: String = ""
     @Published var isDataGood: Bool = false
+    
     private var watchConnector: WatchConnector
+    private var stateManager: WorkoutStateManager
 
     init() {
         self.watchConnector = WatchConnector.shared
+        self.stateManager = WorkoutStateManager.shared
         self.watchConnector.delegate = self
     }
 
     func didReceiveWorkoutInfo() {
         DispatchQueue.main.async {
-            self.showingWorkoutConfirmation = true
+            self.stateManager.transitionTo(.completed)
+//            self.showingWorkoutConfirmation = true
         }
     }
 

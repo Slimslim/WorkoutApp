@@ -9,10 +9,13 @@ import SwiftUI
 
 struct WorkoutFormView: View {
     
-    @StateObject private var viewModel = WorkoutFormViewModel()
     @EnvironmentObject var watchConnector: WatchConnector
-    
+    @EnvironmentObject var stateManager: WorkoutStateManager
     @State private var showingWorkoutConfirmation = false
+    
+    @StateObject private var viewModel = WorkoutFormViewModel()
+    
+//    @State private var isShowingWorkoutConfirmation = false
     
     // Initialize SharedWorkoutInfo to be used in all child views before saving it to database
     @StateObject private var sharedWorkoutInfo = SharedWorkoutInfo.shared
@@ -75,8 +78,15 @@ struct WorkoutFormView: View {
             .navigationTitle("New Workout")
             .scrollDismissesKeyboard(.immediately)
         }
-        .sheet(isPresented: $watchConnector.isShowingWorkoutConfirmationView) {
+        .sheet(isPresented: $stateManager.isWorkoutCompleted) {
             WorkoutConfirmationView(isPresented: $showingWorkoutConfirmation)
+        }
+        .alert(isPresented: $stateManager.isWorkoutInProgress) {
+            Alert(
+                title: Text("Workout in Progress"),
+                message: Text("Please refer to your watch."),
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
     
@@ -105,6 +115,9 @@ struct WorkoutFormView: View {
             notes: "",
             isDataGood: false
         )
+        
+        // Transition to workout defined state
+        WorkoutStateManager.shared.transitionTo(.workoutDefined)
         
         // Handle the form submission
         print("workoutData sent to Watch: \(workoutInfo)")

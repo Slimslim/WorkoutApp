@@ -24,6 +24,7 @@ struct WorkoutConfirmationView: View {
     
     // Shared workout information
     @EnvironmentObject var sharedWorkoutInfo: SharedWorkoutInfo
+    @EnvironmentObject var stateManager: WorkoutStateManager
     
     // Computed property to get the selected movement
     var selectedMovement: WorkoutMovement? {
@@ -128,7 +129,10 @@ struct WorkoutConfirmationView: View {
                 }
             }
             .onAppear(perform: { MongoDbManager.shared.subscribe(realm: realm, busy: $busy) })
-            .onDisappear( perform: { MongoDbManager.shared.unsubscribe(realm: realm, busy: $busy) })
+            .onDisappear{
+                stateManager.transitionTo(.waitingForPhone)
+                MongoDbManager.shared.unsubscribe(realm: realm, busy: $busy)
+            }
             .navigationTitle("Confirm Workout")
         }
     }
@@ -194,7 +198,7 @@ struct WorkoutConfirmationView: View {
         clearWorkout()
         
         // Dismiss the view
-        isPresented = false
+        stateManager.transitionTo(.waitingForPhone)
     }
     
 //    private func subscribe (){

@@ -22,6 +22,7 @@ struct WorkoutAppApp: SwiftUI.App {
 //            MainTabView()
             ContentView()
                 .environmentObject(watchConnector)
+                .environmentObject(WorkoutStateManager.shared)
 //            TestView()
         }
     }

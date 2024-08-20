@@ -95,6 +95,18 @@ class WatchConnector: NSObject, WCSessionDelegate, ObservableObject {
         }
     }
     
+    // Sending WorkoutState to the Watch
+    func sendWorkoutStateToWatch(_ state: WorkoutState) {
+        guard WCSession.default.isReachable else {
+            print("Watch is not reachable")
+            return
+        }
+        let message = ["state": state.rawValue]
+        WCSession.default.sendMessage(message, replyHandler: nil) { error in
+            print("Error sending state: \(error.localizedDescription)")
+        }
+    }
+    
     // Receiving SharedWorkoutInfo from the watch
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         DispatchQueue.main.async {
@@ -107,6 +119,12 @@ class WatchConnector: NSObject, WCSessionDelegate, ObservableObject {
                     print("Failed to decode SharedWorkoutInfo: \(error)")
                 }
             }
+            
+            if let stateRawValue = message["state"] as? Int,
+                           let newState = WorkoutState(rawValue: stateRawValue) {
+                            // Update the WorkoutStateManager on the Watch
+                            WorkoutStateManager.shared.transitionTo(newState)
+                        }
         }
     }
     
@@ -146,6 +164,7 @@ class WatchConnector: NSObject, WCSessionDelegate, ObservableObject {
     // Process the received SharedWorkoutInfo
     func processReceivedWorkoutInfo(_ sharedWorkoutInfo: SharedWorkoutInfo) {
         DispatchQueue.main.async {
+            
             // Update the singleton instance with received data
             SharedWorkoutInfo.shared.workoutId = sharedWorkoutInfo.workoutId
             SharedWorkoutInfo.shared.workoutInfo = sharedWorkoutInfo.workoutInfo
@@ -154,10 +173,10 @@ class WatchConnector: NSObject, WCSessionDelegate, ObservableObject {
             // Print the received workout info for verification
             SharedWorkoutInfo.shared.printWorkoutInfo()
             
-            // Set confirmation view to display
-            self.isShowingWorkoutConfirmationView = true
+//            // Set confirmation view to display
+//            self.isShowingWorkoutConfirmationView = true
             
-            // Notify delegate
+            // Notify delegate (ViewModel will handle the state transition)
             self.delegate?.didReceiveWorkoutInfo()
         }
     }

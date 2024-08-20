@@ -67,6 +67,24 @@ class PhoneConnector: NSObject, WCSessionDelegate, ObservableObject {
                     print("Failed to decode workout info: \(error)")
                 }
             }
+            
+            if let stateRawValue = message["state"] as? Int,
+               let newState = WorkoutState(rawValue: stateRawValue) {
+                // Update the WorkoutStateManager on the Phone
+                WorkoutStateManager.shared.transitionTo(newState)
+            }
+        }
+    }
+    
+    /// Sending WorkoutState to the Phone
+    func sendWorkoutStateToPhone(_ state: WorkoutState) {
+        guard session.isReachable else {
+            print("Phone is not reachable")
+            return
+        }
+        let message = ["state": state.rawValue]
+        session.sendMessage(message, replyHandler: nil) { error in
+            print("Error sending state: \(error.localizedDescription)")
         }
     }
     
@@ -91,6 +109,22 @@ class PhoneConnector: NSObject, WCSessionDelegate, ObservableObject {
     
     /// Sending a file to the phone
     func transferFileToPhone(fileURL: URL) {
+        
+        // Check if the file exists and is accessible
+        let fileManager = FileManager.default
+        guard fileManager.fileExists(atPath: fileURL.path) else {
+            print("File does not exist at path: \(fileURL.path)")
+            return
+        }
+        
+        do {
+            let fileData = try Data(contentsOf: fileURL)
+            print("File is accessible and ready for transfer, size: \(fileData.count) bytes")
+        } catch {
+            print("Failed to access file data: \(error)")
+            return
+        }
+        
         if WCSession.default.isReachable {
             WCSession.default.transferFile(fileURL, metadata: nil)
             print("File transfer initiated")

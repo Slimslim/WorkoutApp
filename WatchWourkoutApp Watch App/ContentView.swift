@@ -10,33 +10,61 @@ import SwiftUI
 struct ContentView: View {
     
     @EnvironmentObject var phoneConnector: PhoneConnector
-//    @Environment(\.modelContext) private var context
+    @EnvironmentObject var stateManager: WorkoutStateManager
+    //    @Environment(\.modelContext) private var context
     
     @StateObject private var sharedWorkoutInfo = SharedWorkoutInfo.shared
     @StateObject private var motionManager = MotionManager()
     
+//    @StateObject private var stateManager = WorkoutStateManager.shared
+    
+    
+    
     @State private var sessionStarted = false
-     
+    
     var body: some View {
+        
         VStack {
-            Text(workoutInfoText)
-                .padding()
             
-            if workoutInfoText != "Start the workout on your phone" {
+            switch stateManager.currentState {
+            case .waitingForPhone:
+                Text("Start the workout on your phone")
+            case .workoutDefined:
+                Text(workoutInfoText)
+                    .padding()
                 Button(action: {
+                    stateManager.transitionTo(.inProgress)
                     toggleSession()
                 }) {
-                    Text(sessionStarted ? "Stop Session" : "Start Session")
+                    Text("Start Session")
                 }
                 .foregroundColor(.white)
-                .background(sessionStarted ? Color.red : Color.green)
+                .background(Color.green)
                 .cornerRadius(100)
+            case .inProgress:
+                Text(workoutInfoText)
+                    .padding()
+                Button(action: {
+                    stateManager.transitionTo(.waitingForData)
+                    toggleSession()
+                }) {
+                    Text("Stop Session")
+                }
+                .foregroundColor(.white)
+                .background(Color.red)
+                .cornerRadius(100)
+            case .waitingForData:
+                Text("Sending...")
+            case .completed:
+                Text("Workout completed")
+                // Add any other necessary UI components
+            case .waitingForWatchStart:
+                // Provide an empty view or a placeholder
+                EmptyView()
             }
         }
         .onAppear {
-//            motionManager.setContext(context)
             motionManager.requestHKAuthorization()
-            // Any additional setup if needed
         }
         
         
@@ -47,14 +75,14 @@ struct ContentView: View {
             let weightText = workoutInfo.weight != nil ? "\(workoutInfo.weight!)lbs" : "N/A"
             return "\(workoutInfo.movement)\n\(workoutInfo.rounds) x \(workoutInfo.reps) @ \(weightText)lbs"
         } else {
-            return "Start the workout on your phone"
+            return "Receiving..."
         }
     }
-
+    
     private func toggleSession() {
         if sessionStarted {
             motionManager.stop()
-//            phoneConnector.sendDataToPhone(message: "message from Watch")
+            //            phoneConnector.sendDataToPhone(message: "message from Watch")
             print("Workout has stopped")
         } else {
             motionManager.start(workoutType: .other)
