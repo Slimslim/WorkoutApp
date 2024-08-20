@@ -9,6 +9,8 @@ import Foundation
 import CoreMotion
 import RealmSwift
 
+// MARK: - Workout and Data Models
+
 /// The `Workout` class represents the main workout entity.
 /// It contains general information about the workout session, such as the user's name,
 /// workout details, and a reference to the time-based batched data.
@@ -73,10 +75,10 @@ class WorkoutInfo: EmbeddedObject {
     }
 }
 
-/// The `WorkoutDataBatch` class represents a single time-based batch of motion data.
+/// The `CoreMotionData` class represents a single time-based batch of motion data.
 /// It includes the start and end times of the batch, the capture rates for the accelerometer and gyroscope,
 /// and lists of the accelerometer and gyroscope data snapshots.
-class WorkoutDataBatch: Object, ObjectKeyIdentifiable {
+class CoreMotionData: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var _id: ObjectId
     @Persisted var workoutId: ObjectId  // Link back to the Workout
     @Persisted var batchNumber: Int  // To identify the order of the batch
@@ -153,6 +155,36 @@ class GyroscopeData: EmbeddedObject {
         self.rotationX = rotationX
         self.rotationY = rotationY
         self.rotationZ = rotationZ
+    }
+}
+
+// MARK: - Conversion Functions
+
+/// Converts an array of `AccelerometerSnapshot` to an array of `AccelerometerData`.
+extension Array where Element == AccelerometerSnapshot {
+    func toAccelerometerData() -> [AccelerometerData] {
+        return self.map { snapshot in
+            AccelerometerData(
+                timestamp: snapshot.timestamp,
+                accelerationX: snapshot.accelerationX,
+                accelerationY: snapshot.accelerationY,
+                accelerationZ: snapshot.accelerationZ
+            )
+        }
+    }
+}
+
+/// Converts an array of `GyroscopeSnapshot` to an array of `GyroscopeData`.
+extension Array where Element == GyroscopeSnapshot {
+    func toGyroscopeData() -> [GyroscopeData] {
+        return self.map { snapshot in
+            GyroscopeData(
+                timestamp: snapshot.timestamp,
+                rotationX: snapshot.rotationX,
+                rotationY: snapshot.rotationY,
+                rotationZ: snapshot.rotationZ
+            )
+        }
     }
 }
 
