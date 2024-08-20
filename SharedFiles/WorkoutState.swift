@@ -8,7 +8,6 @@
 import Foundation
 import Combine
 
-
 /// Workout app state
 enum WorkoutState: Int, Codable {
     /// Waiting for Phone: The app is waiting for the user to define and start the workout on the iPhone.
@@ -24,7 +23,6 @@ enum WorkoutState: Int, Codable {
     /// Completed: The workout is complete, and the app is preparing to display the summary and save the data.
     case completed
 }
-
 
 class WorkoutStateManager: ObservableObject {
 
@@ -63,14 +61,4 @@ class WorkoutStateManager: ObservableObject {
         PhoneConnector.shared.sendWorkoutStateToPhone(currentState)
         #endif
     }
-    
-//    // Utility functions to check the current state
-//    var isWorkoutCompleted: Bool {
-//        return currentState == .completed
-//    }
-//    
-//    var isWorkoutInProgress: Bool {
-//        return currentState == .inProgress
-//    }
-    
 }
