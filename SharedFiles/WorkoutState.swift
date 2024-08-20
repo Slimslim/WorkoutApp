@@ -63,14 +63,4 @@ class WorkoutStateManager: ObservableObject {
         PhoneConnector.shared.sendWorkoutStateToPhone(currentState)
         #endif
     }
-    
-//    // Utility functions to check the current state
-//    var isWorkoutCompleted: Bool {
-//        return currentState == .completed
-//    }
-//    
-//    var isWorkoutInProgress: Bool {
-//        return currentState == .inProgress
-//    }
-    
 }
