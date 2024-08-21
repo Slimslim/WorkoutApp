@@ -66,8 +66,6 @@ struct ContentView: View {
         .onAppear {
             motionManager.requestHKAuthorization()
         }
-        
-        
     }
     
     private var workoutInfoText: String {

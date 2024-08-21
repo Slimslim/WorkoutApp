@@ -38,7 +38,7 @@ struct WorkoutMotionData: Codable {
     var accelerometerRate: Int  // The capture rate of accelerometer data in Hz
     var gyroscopeRate: Int  // The capture rate of gyroscope data in Hz
     
-    init(accelerometerSnapshots: [AccelerometerSnapshot], gyroscopeSnapshots: [GyroscopeSnapshot], accelerometerRate: Int = 50, gyroscopeRate: Int = 25) {
+    init(accelerometerSnapshots: [AccelerometerSnapshot], gyroscopeSnapshots: [GyroscopeSnapshot], accelerometerRate: Int = -1, gyroscopeRate: Int = -1) {
         self.accelerometerSnapshots = accelerometerSnapshots
         self.gyroscopeSnapshots = gyroscopeSnapshots
         self.accelerometerRate = accelerometerRate
@@ -61,60 +61,51 @@ struct WorkoutMotionData: Codable {
     }
 
     
-    /// Batches the motion data based on calculated time intervals.
-    /// The time interval is determined by the data collection rates of the accelerometer and gyroscope.
+    /// Batches the motion data based on the data rates of the accelerometer and gyroscope.
     /// - Parameters:
     ///   - targetEntriesPerBatch: The target number of entries per batch. Default is 10,000.
     /// - Returns: An array of smaller `WorkoutMotionData` batches.
-    func batchByTimeInterval(targetEntriesPerBatch: Int = 10000) -> [WorkoutMotionData] {
+    func batchByDataRate(targetEntriesPerBatch: Int = 10000) -> [WorkoutMotionData] {
         var batches = [WorkoutMotionData]()
-        var currentBatchStartTime: TimeInterval? = nil
         var currentBatchAccelerometerSnapshots = [AccelerometerSnapshot]()
         var currentBatchGyroscopeSnapshots = [GyroscopeSnapshot]()
         
-        // Calculate the batch duration based on the combined target entries
-        let batchTimeInterval = calculateCombinedBatchDuration(targetEntriesPerBatch: targetEntriesPerBatch)
+        // Calculate the ratio between accelerometer and gyroscope data rates
+        let ratio = Double(accelerometerRate) / Double(gyroscopeRate)
         
-        // Iterate through both accelerometer and gyroscope snapshots
-        var accelIndex = 0
-        var gyroIndex = 0
+        // Determine the number of accelerometer and gyroscope entries per batch
+        let gyroEntriesPerBatch = targetEntriesPerBatch / Int(1 + ratio)
+        let accelEntriesPerBatch = targetEntriesPerBatch - gyroEntriesPerBatch
         
-        while accelIndex < accelerometerSnapshots.count || gyroIndex < gyroscopeSnapshots.count {
-            let accelTimestamp = accelIndex < accelerometerSnapshots.count ? accelerometerSnapshots[accelIndex].timestamp : .infinity
-            let gyroTimestamp = gyroIndex < gyroscopeSnapshots.count ? gyroscopeSnapshots[gyroIndex].timestamp : .infinity
+        var accelCount = 0
+        var gyroCount = 0
+        
+        for (accelIndex, accelSnapshot) in accelerometerSnapshots.enumerated() {
+            currentBatchAccelerometerSnapshots.append(accelSnapshot)
+            accelCount += 1
             
-            let currentTimestamp = min(accelTimestamp, gyroTimestamp)
-            
-            if let startTime = currentBatchStartTime {
-                if currentTimestamp - startTime > batchTimeInterval {
-                    // Create a new batch
-                    let newBatch = WorkoutMotionData(
-                        accelerometerSnapshots: currentBatchAccelerometerSnapshots,
-                        gyroscopeSnapshots: currentBatchGyroscopeSnapshots,
-                        accelerometerRate: accelerometerRate,
-                        gyroscopeRate: gyroscopeRate
-                    )
-                    batches.append(newBatch)
-                    
-                    // Start a new batch
-                    currentBatchStartTime = currentTimestamp
-                    currentBatchAccelerometerSnapshots.removeAll()
-                    currentBatchGyroscopeSnapshots.removeAll()
-                }
-            } else {
-                // Start the first batch
-                currentBatchStartTime = currentTimestamp
+            // Only add a gyroscope snapshot if we haven't reached the gyroscope limit
+            if gyroCount < gyroEntriesPerBatch, gyroCount < gyroscopeSnapshots.count {
+                currentBatchGyroscopeSnapshots.append(gyroscopeSnapshots[gyroCount])
+                gyroCount += 1
             }
             
-            // Add the current snapshots to the appropriate batch
-            if accelTimestamp == currentTimestamp {
-                currentBatchAccelerometerSnapshots.append(accelerometerSnapshots[accelIndex])
-                accelIndex += 1
-            }
-            
-            if gyroTimestamp == currentTimestamp {
-                currentBatchGyroscopeSnapshots.append(gyroscopeSnapshots[gyroIndex])
-                gyroIndex += 1
+            // Check if the batch limits are reached
+            if accelCount >= accelEntriesPerBatch && gyroCount >= gyroEntriesPerBatch {
+                // Create a new batch
+                let newBatch = WorkoutMotionData(
+                    accelerometerSnapshots: currentBatchAccelerometerSnapshots,
+                    gyroscopeSnapshots: currentBatchGyroscopeSnapshots,
+                    accelerometerRate: accelerometerRate,
+                    gyroscopeRate: gyroscopeRate
+                )
+                batches.append(newBatch)
+                
+                // Reset for the next batch
+                currentBatchAccelerometerSnapshots.removeAll()
+                currentBatchGyroscopeSnapshots.removeAll()
+                accelCount = 0
+                gyroCount = 0
             }
         }
         
@@ -129,6 +120,7 @@ struct WorkoutMotionData: Codable {
             batches.append(finalBatch)
         }
         
+        print("Total number of batches created: \(batches.count)")
         return batches
     }
     
@@ -144,12 +136,12 @@ struct WorkoutMotionData: Codable {
         return Double(targetEntriesPerBatch) / combinedRate
     }
     
-    /// Returns the number of batches generated based on the dynamically calculated time interval.
-    /// The time interval is determined by the data collection rates of the accelerometer and gyroscope.
+    /// Returns the number of batches generated based on the data rates of the accelerometer and gyroscope.
+    /// The batch size is determined by the data rates and the target number of entries per batch.
     /// - Parameter targetEntriesPerBatch: The target number of entries per batch. Default is 10,000.
     /// - Returns: The number of batches generated.
     func getNumberOfBatches(targetEntriesPerBatch: Int = 10000) -> Int {
-        return batchByTimeInterval(targetEntriesPerBatch: targetEntriesPerBatch).count
+        return batchByDataRate(targetEntriesPerBatch: targetEntriesPerBatch).count
     }
 }
 

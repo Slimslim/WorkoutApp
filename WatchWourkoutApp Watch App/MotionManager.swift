@@ -10,9 +10,9 @@ import HealthKit
 import CoreMotion
 import WatchConnectivity
 import WatchKit
-//import SwiftData
 
-
+/// MotionManager class manages the collection of motion data from the Apple Watch.
+/// It also handles starting and stopping workout sessions, as well as saving and clearing data.
 class MotionManager: NSObject, ObservableObject {
     
     let phoneConnector = PhoneConnector.shared
@@ -25,8 +25,8 @@ class MotionManager: NSObject, ObservableObject {
     private var builder: HKLiveWorkoutBuilder?
     private var runtimeSession: WKExtendedRuntimeSession?
     
-    var dataCount = 0
-    let maxDataCount = 10
+//    var dataCount = 0
+//    let maxDataCount = 10
     
     // Properties to hold the collected data
     private var accelerometerSnapshots: [AccelerometerSnapshot] = []
@@ -43,6 +43,8 @@ class MotionManager: NSObject, ObservableObject {
 //            self.context = context
 //        }
     
+    /// Starts the workout session and begins data collection.
+    /// - Parameter workoutType: The type of workout activity being performed.
     func start(workoutType: HKWorkoutActivityType) {
         isCollecting = true
         print("Start with workoutType: \(workoutType)")
@@ -50,18 +52,18 @@ class MotionManager: NSObject, ObservableObject {
         startDataCollection()
     }
     
+    /// Stops data collection and the workout session, then saves the data.
     func stop() {
         stopDataCollection()
         stopWorkoutSession()
-        // Save the data, encode it into a file and send it to the phone
-        saveData()
-        //phoneConnector.sendDataToPhone(data: SharedWorkoutInfo.shared)
-        
-        // Reinitialize sensor and clear the data after saving
-        reinitializeSensorManager()
+        setDataRate()         // Calculate and set the data rates after stopping collection
+        saveData() // Save the data, encode it into a file and send it to the phone
+        reinitializeSensorManager() // Reinitialize sensor and clear the data after saving
         clearMotionData()
     }
     
+    /// Starts the workout session using HealthKit.
+    /// - Parameter workoutType: The type of workout activity being performed.
     private func startWorkoutSession(workoutType: HKWorkoutActivityType) {
         let configuration = HKWorkoutConfiguration()
         configuration.activityType = workoutType
@@ -94,7 +96,8 @@ class MotionManager: NSObject, ObservableObject {
 //        self.runtimeSession?.delegate = self
 //        self.runtimeSession?.start()
     }
-        
+    
+    /// Stops the workout session and ends data collection.
     private func stopWorkoutSession() {
         guard let workoutSession = workoutSession, let builder = builder else {
             print("No active workout session to stop")
@@ -116,6 +119,8 @@ class MotionManager: NSObject, ObservableObject {
         self.builder = nil
     }
     
+    /// Starts the workout session using HealthKit.
+    /// - Parameter workoutType: The type of workout activity being performed.
     func startDataCollection() {
         print("Start Data Collection Function Started")
         guard CMBatchedSensorManager.isAccelerometerSupported && CMBatchedSensorManager.isDeviceMotionSupported else {
@@ -127,8 +132,8 @@ class MotionManager: NSObject, ObservableObject {
         Task {
             do {
                 for try await dataArray in sensorManager.accelerometerUpdates(){
+                    var timestamps = [TimeInterval]()
                     for data in dataArray{
-                        if self.dataCount < self.maxDataCount{
                             let snapshot = AccelerometerSnapshot(
                                 timestamp: data.timestamp,
                                 accelerationX: data.acceleration.x,
@@ -136,9 +141,7 @@ class MotionManager: NSObject, ObservableObject {
                                 accelerationZ: data.acceleration.z
                             )
                             accelerometerSnapshots.append(snapshot)
-//                            print("Accelerometer data appended: \(snapshot)")
-//                            print("Current Accelerometer Data: \(accelerometerSnapshots)")
-                        }
+                            timestamps.append(data.timestamp)
                     }
                 }
                 
@@ -151,6 +154,7 @@ class MotionManager: NSObject, ObservableObject {
         Task{
             do {
                 for try await dataArray in sensorManager.deviceMotionUpdates(){
+                    var timestamps = [TimeInterval]()
                     for data in dataArray{
                         let snapshot = GyroscopeSnapshot(
                             timestamp: data.timestamp,
@@ -159,7 +163,7 @@ class MotionManager: NSObject, ObservableObject {
                             rotationZ: data.rotationRate.z
                         )
                         gyroscopeSnapshots.append(snapshot)
-                        //                            print("Gyroscope data appended: \(snapshot)")
+                        timestamps.append(data.timestamp)
                     }
                 }
                 
@@ -169,17 +173,27 @@ class MotionManager: NSObject, ObservableObject {
         }
     }
     
+    /// Stops data collection from the accelerometer and gyroscope.
     func stopDataCollection() {
         sensorManager.stopAccelerometerUpdates()
         sensorManager.stopDeviceMotionUpdates()
-//        //Added to fully stop and reset Sensor
-//        accelerometerSnapshots.removeAll()
-//        gyroscopeSnapshots.removeAll()
-        
-//        print("Current Accelerometer Data: \(accelerometerSnapshots)")
         isCollecting = false
     }
     
+    /// Calculates and sets the data rates for both accelerometer and gyroscope.
+    private func setDataRate() {
+        if let accelerometerRate = calculateRate(timestamps: accelerometerSnapshots.map { $0.timestamp }) {
+            sharedWorkoutInfo.workoutData?.accelerometerRate = Int(accelerometerRate)
+            print("Final Accelerometer Rate: \(accelerometerRate) Hz")
+        }
+        
+        if let gyroscopeRate = calculateRate(timestamps: gyroscopeSnapshots.map { $0.timestamp }) {
+            sharedWorkoutInfo.workoutData?.gyroscopeRate = Int(gyroscopeRate)
+            print("Final Gyroscope Rate: \(gyroscopeRate) Hz")
+        }
+    }
+    
+    /// Requests authorization to access HealthKit data.
     func requestHKAuthorization() {
         let typesToShare: Set = [
             HKQuantityType.workoutType()
@@ -206,15 +220,18 @@ class MotionManager: NSObject, ObservableObject {
         }
     }
     
-    /// Function to gather and save all the data in one object
+    /// Gathers and saves all collected data into a single object, then transfers it to the phone.
     func saveData() {
         print("Saving data...")
-//        print("Accelerometer data count: \(accelerometerSnapshots.count)")
-//        print("Gyroscope data count: \(gyroscopeSnapshots.count)")
         
         // Ensure workoutData is initialized
         if sharedWorkoutInfo.workoutData == nil {
-            sharedWorkoutInfo.workoutData = WorkoutMotionData(accelerometerSnapshots: [], gyroscopeSnapshots: [])
+            sharedWorkoutInfo.workoutData = WorkoutMotionData(
+                accelerometerSnapshots: [],
+                gyroscopeSnapshots: [],
+                accelerometerRate: sharedWorkoutInfo.workoutData?.accelerometerRate ?? 0,
+                gyroscopeRate: sharedWorkoutInfo.workoutData?.gyroscopeRate ?? 0
+            )
         }
         
         sharedWorkoutInfo.workoutData?.accelerometerSnapshots = self.accelerometerSnapshots
@@ -236,6 +253,23 @@ class MotionManager: NSObject, ObservableObject {
     
     func reinitializeSensorManager() {
         sensorManager = CMBatchedSensorManager()
+    }
+    
+    /// Calculates the rate of data collection in Hz based on the provided timestamps.
+    /// - Parameter timestamps: An array of timestamps for the collected data.
+    /// - Returns: The calculated data rate in Hz, or `nil` if the timestamps are insufficient.
+    private func calculateRate(timestamps: [TimeInterval]) -> Double? {
+        guard timestamps.count > 1 else {
+            return nil
+        }
+        
+        var totalInterval: TimeInterval = 0
+        for i in 1..<timestamps.count {
+            totalInterval += timestamps[i] - timestamps[i - 1]
+        }
+        
+        let averageInterval = totalInterval / Double(timestamps.count - 1)
+        return 1.0 / averageInterval
     }
     
 }

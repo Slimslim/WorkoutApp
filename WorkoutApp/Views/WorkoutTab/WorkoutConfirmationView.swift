@@ -83,7 +83,21 @@ struct WorkoutConfirmationView: View {
                 /// Section to display collected data status.
                 Section(header: Text("Data collected")) {
                     HStack {
-                        Text("Accelerometer Data")
+                        VStack(alignment: .leading){
+                            Text("Accelerometer Data")
+                            HStack{
+                                if let accelerometerSnapshots = sharedWorkoutInfo.workoutData?.accelerometerSnapshots {
+                                    Text("Entries: \(accelerometerSnapshots.count)")
+                                        .font(.caption)  // Smaller font size
+                                        .foregroundColor(.gray)  // Gray color for subtext
+                                    if let accelerometerRate = sharedWorkoutInfo.workoutData?.accelerometerRate {
+                                        Text("Rate: \(accelerometerRate) Hz")
+                                            .font(.caption)  // Smaller font size
+                                            .foregroundColor(.gray)  // Gray color for subtext
+                                    }
+                                }
+                            }
+                        }
                         Spacer()
                         Image(systemName: sharedWorkoutInfo.workoutData?.accelerometerSnapshots.isEmpty == false ? "checkmark" : "xmark")
                             .foregroundColor(sharedWorkoutInfo.workoutData?.accelerometerSnapshots.isEmpty == false ? .green : .red)
@@ -92,7 +106,22 @@ struct WorkoutConfirmationView: View {
                     }
                     
                     HStack {
-                        Text("Gyroscope Data")
+                        VStack(alignment: .leading) {
+                            Text("Gyroscope Data")
+                            HStack{
+                                if let gyroscopeSnapshots = sharedWorkoutInfo.workoutData?.gyroscopeSnapshots {
+                                    Text("Entries: \(gyroscopeSnapshots.count)")
+                                        .font(.caption)  // Smaller font size
+                                        .foregroundColor(.gray)  // Gray color for subtext
+                                    if let gyroscopeRate = sharedWorkoutInfo.workoutData?.gyroscopeRate {
+                                        Text("Rate: \(gyroscopeRate) Hz")
+                                            .font(.caption)  // Smaller font size
+                                            .foregroundColor(.gray)  // Gray color for subtext
+                                    }
+                                }
+                            }
+                        }
+                        
                         Spacer()
                         Image(systemName: sharedWorkoutInfo.workoutData?.gyroscopeSnapshots.isEmpty == false ? "checkmark" : "xmark")
                             .foregroundColor(sharedWorkoutInfo.workoutData?.gyroscopeSnapshots.isEmpty == false ? .green : .red)
@@ -208,7 +237,7 @@ struct WorkoutConfirmationView: View {
         }
         
         // Implement batching logic here based on time intervals.
-        let batches = workoutData.batchByTimeInterval() // Method to be defined
+        let batches = workoutData.batchByDataRate(targetEntriesPerBatch: 10000)
         
         for (index, batch) in batches.enumerated() {
             

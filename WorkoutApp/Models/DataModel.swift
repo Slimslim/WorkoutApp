@@ -53,6 +53,7 @@ class WorkoutInfo: EmbeddedObject {
     @Persisted var startTime: Date?  // Start time of the workout
     @Persisted var endTime: Date?  // End time of the workout
     @Persisted var numberOfBatches: Int?  // Total number of data batches
+    @Persisted var version: Int  // Version number for the workout info data
 
     /// Initializes a new `WorkoutInfo` object.
     /// - Parameters:
@@ -63,7 +64,8 @@ class WorkoutInfo: EmbeddedObject {
     ///   - startTime: The start time of the workout.
     ///   - endTime: The end time of the workout.
     ///   - numberOfBatches: The total number of data batches generated during the workout.
-    convenience init(movement: String, rounds: Int, reps: Int, weight: Double? = nil, startTime: Date? = nil, endTime: Date? = nil, numberOfBatches: Int? = nil) {
+    ///   - version: The version number for the workout info data.
+    convenience init(movement: String, rounds: Int, reps: Int, weight: Double? = nil, startTime: Date? = nil, endTime: Date? = nil, numberOfBatches: Int? = nil, version: Int = 1) {
         self.init()
         self.movement = movement
         self.rounds = rounds
@@ -72,6 +74,7 @@ class WorkoutInfo: EmbeddedObject {
         self.startTime = startTime
         self.endTime = endTime
         self.numberOfBatches = numberOfBatches
+        self.version = version
     }
 }
 
