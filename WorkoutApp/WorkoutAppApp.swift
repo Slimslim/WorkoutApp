@@ -9,7 +9,15 @@ import SwiftUI
 //import SwiftData
 import RealmSwift
 
-let realmApp = RealmSwift.App(id: "workoutapp-fepvuis")
+//let realmApp = RealmSwift.App(id: "workoutapp-fepvuis")
+
+// Configure the Realm App with the new base URL
+let configuration = AppConfiguration(
+   baseURL: "https://services.cloud.mongodb.com", // You can customize base URL
+   transport: nil, // Custom RLMNetworkTransportProtocol
+   defaultRequestTimeoutMS: 30000
+)
+let realmApp = RealmSwift.App(id: "workoutapp-fepvuis", configuration: configuration)
 
 @main
 struct WorkoutAppApp: SwiftUI.App {

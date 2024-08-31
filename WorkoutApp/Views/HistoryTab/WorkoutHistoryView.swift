@@ -18,6 +18,7 @@ struct WorkoutHistoryView: View {
     @State private var searchText = ""
     @State private var busy = false
     
+    
     var body: some View {
         
         // filter list with search text
@@ -27,27 +28,27 @@ struct WorkoutHistoryView: View {
             Workout.username.contains(searchText, options: .caseInsensitive)
         }
         
+        // Computed property for grouping workouts by movement
+        var groupedWorkouts: [String: [Workout]] {
+            let workoutsToGroup = searchText.isEmpty ? workouts : filteredWorkouts
+            return Dictionary(grouping: workoutsToGroup, by: { $0.info?.movement ?? "Unknown" })
+        }
+        
         NavigationStack{
             if !busy {
                 List {
-                    ForEach(searchText.isEmpty ? workouts : filteredWorkouts) { workout in
-                        HStack {
+                    // Group workouts by movement name
+                    ForEach(groupedWorkouts.keys.sorted(), id: \.self) { movement in
+                        let workoutsForMovement = groupedWorkouts[movement] ?? []
+                        let count = workoutsForMovement.count
+                        
+                        NavigationLink(destination: WorkoutDetailView(workouts: workoutsForMovement)) {
                             HStack {
-                                let movement = workout.info?.movement ?? ""
-                                let rounds = workout.info?.rounds ?? 0
-                                let reps = workout.info?.reps ?? 0
-                                
-                                Text(movement)
-                                Text("\(rounds) X \(reps)")
-                                    .onAppear {
-                                        print("Movement: \(movement), Rounds: \(rounds), Reps: \(reps)")
-                                    }
+                                Text("\(movement)") // Display movement name with count
+                                    .font(.headline)
+                                Spacer()
+                                Text("\(count)")
                             }
-                            Spacer()
-                            Image(systemName: workout.isDataGood ? "checkmark" : "xmark")
-                                .foregroundColor(workout.isDataGood ? .green : .red)
-                                .font(.system(size: 15, weight: .semibold))
-                                .padding(.trailing)
                         }
                     }
                 }
@@ -64,9 +65,11 @@ struct WorkoutHistoryView: View {
         /// Subscribe and unsubscribe from databse when in the view
         .onAppear(perform: {
             MongoDbManager.shared.subscribe(realm: realm, busy: $busy)
+            MongoDbManager.shared.subscribeToCoreMotionData(realm: realm, busy: $busy)
         })
         .onDisappear(perform: {
             MongoDbManager.shared.unsubscribe(realm: realm, busy: $busy)
+            MongoDbManager.shared.unsubscribeFromCoreMotionData(realm: realm, busy: $busy) // Unsubscribe from CoreMotionData
         })
     }
 }

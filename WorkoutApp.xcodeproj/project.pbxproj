@@ -26,6 +26,8 @@
 		A6551C8B2C468F1E00D413BF /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = A6551C712C41B4EE00D413BF /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A6551C8D2C46E32500D413BF /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C8C2C46E32500D413BF /* CustomViews.swift */; };
 		A6551C8F2C4C4B3400D413BF /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6551C8E2C4C4B3400D413BF /* TestView.swift */; };
+		A66E6B692C7D9C2C00468904 /* WorkoutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66E6B682C7D9C2C00468904 /* WorkoutDetailView.swift */; };
+		A66E6B6B2C7E740900468904 /* DataDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66E6B6A2C7E740900468904 /* DataDetailView.swift */; };
 		A6B3ADA32C3366B600AD7D99 /* WatchConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B3ADA22C3366B600AD7D99 /* WatchConnector.swift */; };
 		A6B3ADA52C3367FD00AD7D99 /* PhoneConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B3ADA42C3367FD00AD7D99 /* PhoneConnector.swift */; };
 		A6B3ADA72C336CC900AD7D99 /* WatchWourkoutApp Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A6EED3A12C2BF78700A4615C /* WatchWourkoutApp Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -116,6 +118,9 @@
 		A6551C892C4664E100D413BF /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		A6551C8C2C46E32500D413BF /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
 		A6551C8E2C4C4B3400D413BF /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		A66E6B672C7D943C00468904 /* WorkoutApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WorkoutApp.entitlements; sourceTree = "<group>"; };
+		A66E6B682C7D9C2C00468904 /* WorkoutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetailView.swift; sourceTree = "<group>"; };
+		A66E6B6A2C7E740900468904 /* DataDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDetailView.swift; sourceTree = "<group>"; };
 		A6B3ADA12C33543800AD7D99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A6B3ADA22C3366B600AD7D99 /* WatchConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnector.swift; sourceTree = "<group>"; };
 		A6B3ADA42C3367FD00AD7D99 /* PhoneConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneConnector.swift; sourceTree = "<group>"; };
@@ -210,6 +215,8 @@
 			isa = PBXGroup;
 			children = (
 				A6EED3A72C2CA46F00A4615C /* WorkoutHistoryView.swift */,
+				A66E6B682C7D9C2C00468904 /* WorkoutDetailView.swift */,
+				A66E6B6A2C7E740900468904 /* DataDetailView.swift */,
 			);
 			path = HistoryTab;
 			sourceTree = "<group>";
@@ -259,6 +266,7 @@
 		A6EED3322C2BAD1000A4615C /* WorkoutApp */ = {
 			isa = PBXGroup;
 			children = (
+				A66E6B672C7D943C00468904 /* WorkoutApp.entitlements */,
 				A6B3ADA12C33543800AD7D99 /* Info.plist */,
 				A60A510A2C32536D00181199 /* Services */,
 				A6EED3AB2C2CA51600A4615C /* Models */,
@@ -445,6 +453,7 @@
 				A6551C8F2C4C4B3400D413BF /* TestView.swift in Sources */,
 				A6EED3A62C2CA41500A4615C /* WorkoutFormView.swift in Sources */,
 				A6EED39D2C2BE31D00A4615C /* DataModel.swift in Sources */,
+				A66E6B6B2C7E740900468904 /* DataDetailView.swift in Sources */,
 				A6551C602C36153100D413BF /* WorkoutFormViewModel.swift in Sources */,
 				A6551C862C45AB0800D413BF /* LogoutButtonView.swift in Sources */,
 				A6EED3A82C2CA46F00A4615C /* WorkoutHistoryView.swift in Sources */,
@@ -466,6 +475,7 @@
 				A6551C782C43CCB100D413BF /* ProductsView.swift in Sources */,
 				A6EED3A42C2CA3EF00A4615C /* MainTabView.swift in Sources */,
 				A6EED3362C2BAD1000A4615C /* ContentView.swift in Sources */,
+				A66E6B692C7D9C2C00468904 /* WorkoutDetailView.swift in Sources */,
 				A6551C742C41B8F700D413BF /* LoginView.swift in Sources */,
 				A6EED3342C2BAD1000A4615C /* WorkoutAppApp.swift in Sources */,
 				A6551C762C41C64400D413BF /* WorkoutsView.swift in Sources */,
@@ -631,6 +641,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WorkoutApp/WorkoutApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WorkoutApp/Preview Content\"";
@@ -666,6 +677,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WorkoutApp/WorkoutApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WorkoutApp/Preview Content\"";
